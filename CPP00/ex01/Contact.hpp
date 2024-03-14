@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:12:28 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/14 14:12:19 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:12:53 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ class	Contact {
 	public :
 		Contact();
 		~Contact();
-		void	setFirstName(std::string str);
+		void		setFirstName(std::string str);
+		void		setLastName(std::string str);
 		
-		
+		std::string	getFirstName();
+		std::string	getLastName();
+
 	private :
 		std::string	_FirstName;
 		std::string	_LastName;
