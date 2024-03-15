@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:41:28 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/14 16:47:55 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:50:07 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,15 @@ class	PhoneBook {
 
 			std::string	getInput(std::string const message);
 			// print la string const a recuperer, la recup et la renvoie
-			void		printContactList(void);
-
+			bool		printContactList(void) const;
+			void		printTableStr(std::string str) const;
+			bool		isNumber(std::string str) const;
+			bool		isValidNumber(std::string str) const ;
+			void		printContactInfos(std::string str) const;
 			
 	private ://mettre en prive toutes les fonctons/attributs utilise seulement dans PhoneBook.cpp
-			int			_continue;
+			bool		_continue;
+			int			_index;
 			Contact		_contact[8];
 			
 	

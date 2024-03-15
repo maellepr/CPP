@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:19:10 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/14 16:14:33 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:56:06 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int main(void)
 	std::string	user_input;
 	
 
-	std::cout << std::endl << "|~-~-~- Welcome to the PhoneBook ! -~-~-~|" << std::endl << std::endl;
+	std::cout << std::endl << "|~-~-~-~- Welcome to the PhoneBook ! -~-~-~-~|" << std::endl;
 	while (1)
 	{
-			std::cout << "  What would you like to do ?" << std::endl;
+			std::cout << std::endl << "  What would you like to do ?" << std::endl << std::endl;
 			std::getline(std::cin, user_input);//a voir que faire lorsque !user_input
 			if (user_input == "ADD")
 				book.addContact();
@@ -35,12 +35,12 @@ int main(void)
 				break;
 			else
 			{
-				std::cout << "  Choose one of this command:" << std::endl
-						<< "    ->	ADD	<- to add a contact" << std::endl
-						<< "    ->	SEARCH	<- to search in the contact list" << std::endl
-						<< "    ->	EXIT	<- to exit the PhoneBook" << std::endl;
+				std::cout << std::endl << "  Choose one of this command:" << std::endl
+						<< "    «	ADD	» to add a contact" << std::endl
+						<< "    «	SEARCH	» to search in the contact list" << std::endl
+						<< "    «	EXIT	» to exit the PhoneBook" << std::endl;
 			}
 	}
-	std::cout << "|~-~ Thanks for using the PhoneBook ! ~-~|" << std::endl;
+	std::cout << "|~-~-~ Thanks for using the PhoneBook ! ~-~-~|" << std::endl;
 	return (0);
 }

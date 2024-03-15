@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:12:28 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/14 17:12:53 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/15 11:55:15 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,19 @@ class	Contact {
 	public :
 		Contact();
 		~Contact();
-		void		setFirstName(std::string str);
-		void		setLastName(std::string str);
-		
-		std::string	getFirstName();
-		std::string	getLastName();
+		bool		setFirstName(std::string str);
+		bool		setLastName(std::string str);
+		bool		setNickname(std::string str);
+		bool		setPhoneNumber(std::string str);
+		bool		setDarkSecret(std::string str);
+
+		std::string	getFirstName() const;
+		std::string	getLastName() const;
+		std::string	getNickname() const;
+		std::string getPhoneNumber() const;
+		std::string	getDarkSecret() const;
+
+		bool		isEmptyLine() const;
 
 	private :
 		std::string	_FirstName;
