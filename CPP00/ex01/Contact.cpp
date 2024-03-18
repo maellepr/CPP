@@ -6,11 +6,12 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:43:10 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/15 12:07:04 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:24:12 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
+#include <iostream>
 
 Contact::Contact(void) /*: _FirstName(""), _LastName(""), _Nickname(""), _PhoneNumber(""), _DarkSecret("")*/
 {
@@ -22,19 +23,17 @@ Contact::~Contact(void)
 	return ;
 }
 
-// ----------------- set ---------------------//
-
 bool	Contact::setFirstName(std::string str)
 {
-	if (str.empty())
-		return true;//continuer de checher l'input
+	if (str.empty() || !_isLetter(str, "first name"))
+		return true;
 	this->_FirstName = str;
-	return false;//arreter input
+	return false;
 }
 
 bool	Contact::setLastName(std::string str)
 {
-	if (str.empty())
+	if (str.empty() || !_isLetter(str, "last name"))
 		return true;
 	this->_LastName = str;
 	return false;
@@ -42,7 +41,7 @@ bool	Contact::setLastName(std::string str)
 
 bool	Contact::setNickname(std::string str)
 {
-	if (str.empty())
+	if (str.empty() || !_isLetter(str, "nickname"))
 		return true;
 	this->_Nickname = str;
 	return false;
@@ -50,7 +49,7 @@ bool	Contact::setNickname(std::string str)
 
 bool	Contact::setPhoneNumber(std::string str)
 {
-	if (str.empty())
+	if (str.empty() || !_isNumber(str, "phone number"))
 		return true;
 	this->_PhoneNumber = str;
 	return false;
@@ -58,14 +57,11 @@ bool	Contact::setPhoneNumber(std::string str)
 
 bool	Contact::setDarkSecret(std::string str)
 {
-	if (str.empty())
+	if (str.empty() || !_isLetter(str, "darkest secret"))
 		return true;
 	this->_DarkSecret = str;
 	return false;
 }
-// -------------------------------------------//
-
-// ----------------- get ---------------------//
 
 std::string	Contact::getFirstName(void) const
 {
@@ -92,18 +88,37 @@ std::string Contact::getDarkSecret(void) const
 	return (this->_DarkSecret);
 }
 
-// -------------------------------------------//
-#include <iostream>
-
 bool	Contact::isEmptyLine(void) const
 {
 	if(this->_FirstName.empty() || this->_LastName.empty() ||
 		this->_Nickname.empty() || this->_PhoneNumber.empty() ||
 		this->_PhoneNumber.empty())
-	{
-		// std::cout << "send true" << std::endl;
 		return (true);
+	return (false);
+}
+
+bool	Contact::_isLetter(std::string const str, std::string const info) const
+{
+	for (int i = 0; str[i]; i++)
+	{
+		if (!std::isalpha(str[i]) && str[i] != ' ' && str[i] != '-')
+		{
+			std::cout << "◢!◣The " << info << " has to be only letters◢!◣" << std::endl;
+			return (false);
+		}
 	}
-	else
-		return (false);
+	return (true);
+}
+
+bool	Contact::_isNumber(std::string const str, std::string const info) const
+{
+	for (int i = 0; str[i]; i++)
+	{
+		if (str[i] < '0' || str[i] > '9')
+		{
+			std::cout << "◢!◣The " << info << " has to be only digits◢!◣" << std::endl;
+			return (false);
+		}
+	}
+	return (true);
 }
