@@ -6,7 +6,7 @@
 #    By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/12 16:15:13 by mapoirie          #+#    #+#              #
-#    Updated: 2024/03/13 14:25:02 by mapoirie         ###   ########.fr        #
+#    Updated: 2024/03/19 15:46:46 by mapoirie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ clean:
 		rm -f $(OBJS)
 
 fclean:
-		rm -f $(NAME)
+		rm -f $(NAME) $(OBJS)
 	
 re: fclean
 		make all

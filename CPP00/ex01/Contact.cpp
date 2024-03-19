@@ -6,14 +6,14 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 10:43:10 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/18 14:24:12 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:15:17 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Contact.hpp"
 #include <iostream>
 
-Contact::Contact(void) /*: _FirstName(""), _LastName(""), _Nickname(""), _PhoneNumber(""), _DarkSecret("")*/
+Contact::Contact(void) : _FirstName(""), _LastName(""), _Nickname(""), _PhoneNumber(""), _DarkSecret("")
 {
 	return ;
 }

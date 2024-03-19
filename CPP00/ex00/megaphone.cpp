@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:26:01 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/13 12:31:37 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:48:59 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int main(int ac, char **av)
 			{
 				str[j] = std::toupper(str[j]);
 			}
-			std::cout << str << " ";
+			std::cout << str;
 		}
 		std::cout << std::endl;
 	}

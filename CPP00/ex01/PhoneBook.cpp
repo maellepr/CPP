@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:27:04 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/18 17:41:14 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:38:40 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <iostream>
 #include <iomanip>
 
-PhoneBook::PhoneBook(void) : to_continue(true), _index(0)
+PhoneBook::PhoneBook(void) : to_continue(true), _index(0), _index2(0)
 {
 	return ;
 }
@@ -27,6 +27,7 @@ PhoneBook::~PhoneBook(void)
 void	PhoneBook::addContact(void)
 {
 	std::string	input;
+	this->to_continue = true;
 
 	std::cout << std::endl << "┌──────────────────────────────────────────┐" << std::endl;
 	std::cout <<			  "│ ･｡.･ﾟﾟ･｡. New contact menu ･ﾟﾟ･｡.･ﾟﾟ･｡.  │" << std::endl;
@@ -69,12 +70,15 @@ void	PhoneBook::addContact(void)
 	this->_index++;
 	if (_index > 7)
 		this->_index = 0;
+	if (_index2 < 8)
+		this->_index2++;
 	return ;
 }
 
 void	PhoneBook::searchContact(void)
 {
 	std::string	input;
+	this->to_continue = true;
 
 	if (!_printContactList())
 		return ;
@@ -84,8 +88,13 @@ void	PhoneBook::searchContact(void)
 	while (to_continue)
 	{
 		input = _getInput("index number you would like to display");
+		// std::cout << "input.size = " << input.size() << " is number:" << _isNumber(input) << " is valid number:" << _isValidNumber(input) << std::endl;
 		if (!to_continue || (input.size() == 1 && _isNumber(input) && _isValidNumber(input)))
 			break ;
+		if (this->_index2 == 1)
+			std::cout << std::endl << " You can only choose contact [1] because only one contact has been saved !" << std::endl;
+		else
+			std::cout << std::endl << " It should be a number between 1 and " << this->_index2 << std::endl;
 	}
 	if (to_continue)
 		_printContactInfos(input);
@@ -113,15 +122,15 @@ bool	PhoneBook::_printContactList(void) const
 		std::cout			   << "└──────────────────────────────────────────┘" << std::endl;
 		return (false);
 	}
-	std::cout	<< "╔══════════╦══════════╦══════════╦══════════╗" << std::endl
-				<< "║   INDEX  ║FIRST NAME║LAST  NAME║ NICKNAME ║" << std::endl;
+	std::cout << std::endl << "╔══════════╦══════════╦══════════╦══════════╗" << std::endl
+						   << "║   INDEX  ║FIRST NAME║LAST  NAME║ NICKNAME ║" << std::endl;
 	
 	for (int i = 1; i < 9; i++)
 	{
 		if (!this->_contact[i - 1].isEmptyLine())
 		{
 			std::cout << "╠══════════╬══════════╬══════════╬══════════╣" << std::endl
-			<< "║    [" << i << "]   ║";
+			<< "║       [" << i << "]║";
 			_printTableStr(_contact[i - 1].getFirstName()); 
 			std::cout <<"║";
 			_printTableStr(_contact[i - 1].getLastName());
@@ -168,7 +177,8 @@ bool PhoneBook::_isValidNumber(std::string str) const
 {
 	int	index = str[0] - '0';
 
-	if (index <= this->_index)
+	// std::cout << " is ValidNumber index = " << index << "  this->index2 = " << this->_index2 << std::endl;
+	if (index <= this->_index2)
 		return (true);
 	return (false);
 }
