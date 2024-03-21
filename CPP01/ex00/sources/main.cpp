@@ -1,12 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   newZombie.cpp                                      :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:37:49 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/20 16:37:50 by mapoirie         ###   ########.fr       */
+/*   Created: 2024/03/20 16:23:15 by mapoirie          #+#    #+#             */
+/*   Updated: 2024/03/21 10:48:46 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Zombie.hpp"
+
+Zombie*	newZombie(std::string name);
+void	randomChump(std::string name);
+
+int main(void)
+{
+	Zombie	*Zomb1 = newZombie("Alex");//allocation avec new (sur le tas heap)
+	// Zombie	Zomb3;//Zombie sans nom qui utilise le constructeur par default
+
+	Zomb1->announce();
+	randomChump("Jenny");
+	
+	delete Zomb1;
+}
