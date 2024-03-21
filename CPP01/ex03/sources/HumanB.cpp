@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Zombie.cpp                                         :+:      :+:    :+:   */
+/*   HumanB.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:03:54 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/21 13:44:16 by mapoirie         ###   ########.fr       */
+/*   Created: 2024/03/21 14:30:54 by mapoirie          #+#    #+#             */
+/*   Updated: 2024/03/21 16:59:43 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Zombie.hpp"
+#include "HumanB.hpp"
 
-Zombie::Zombie(void)
+/***Default Constructor***/
+HumanB::HumanB()
 {
-	std::cout << "A zombie with no name has been created !" << std::endl;	
 	return ;
 }
 
-Zombie::Zombie(std::string name)
+/***Constructor***/
+HumanB::HumanB(std::string name) : _name(name)
 {
-	this->_name = name;
-	std::cout << "A zombie named " << name << " has been created !" << std::endl;
-}
-
-Zombie::~Zombie(void)
-{
-	std::cout << this->_name << " has been destroyed !" << std::endl;
 	return ;
 }
 
-void	Zombie::announce(void)
+/***Destructor***/
+HumanB::~HumanB()
 {
-	std::cout << this->_name << ": BraiiiiiiinnnzzzZ..." << std::endl;
+	return ;
+}
+
+void	HumanB::attack() const
+{
+	std::cout << this->_name << " attacks with their " << this->_weapon->getType() << std::endl;	
+}
+
+void	HumanB::setWeapon(Weapon &weapon)
+{
+	this->_weapon = &weapon;
 }

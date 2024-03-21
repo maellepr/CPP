@@ -6,11 +6,11 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:15 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/21 10:48:46 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:12:23 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Zombie.hpp"
+#include "../include/Zombie.hpp"
 
 Zombie*	newZombie(std::string name);
 void	randomChump(std::string name);

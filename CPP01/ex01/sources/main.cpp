@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   newZombie.cpp                                      :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:37:49 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/21 12:12:14 by mapoirie         ###   ########.fr       */
+/*   Created: 2024/03/21 11:19:02 by mapoirie          #+#    #+#             */
+/*   Updated: 2024/03/21 13:38:13 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/Zombie.hpp"
 
-Zombie	*newZombie(std::string name)
+Zombie*	zombieHorde(int N, std::string name);
+
+int main(void)
 {
-	Zombie	*Zomb = new Zombie(name);
-	//allocation sur le tas (heap) car on envoie un
-	//pointeur et on devra le delete plus tard
-	return (Zomb);
+	int	N = 4;
+	Zombie *zombHorde = zombieHorde(N, "Cookie");
+
+	for (int i = 0; i < N; i++)
+		zombHorde->announce();
+	delete [] zombHorde;
 }

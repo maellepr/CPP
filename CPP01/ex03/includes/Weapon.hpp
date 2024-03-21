@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   newZombie.cpp                                      :+:      :+:    :+:   */
+/*   Weapon.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:37:49 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/21 12:12:14 by mapoirie         ###   ########.fr       */
+/*   Created: 2024/03/21 14:21:34 by mapoirie          #+#    #+#             */
+/*   Updated: 2024/03/21 17:12:26 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Zombie.hpp"
+#ifndef WEAPON_H
+#define WEAPON_H
 
-Zombie	*newZombie(std::string name)
+#include <iostream>
+#include <string>
+
+class Weapon
 {
-	Zombie	*Zomb = new Zombie(name);
-	//allocation sur le tas (heap) car on envoie un
-	//pointeur et on devra le delete plus tard
-	return (Zomb);
-}
+	public :
+		// Weapon();
+		Weapon(std::string type);
+		~Weapon();
+
+		std::string	getType(void) const;
+		void		setType(std::string type);
+
+	private :
+		std::string	_type;
+};
+
+
+#endif

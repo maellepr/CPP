@@ -1,21 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   newZombie.cpp                                      :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:37:49 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/21 12:12:14 by mapoirie         ###   ########.fr       */
+/*   Created: 2024/03/21 14:29:35 by mapoirie          #+#    #+#             */
+/*   Updated: 2024/03/21 17:18:02 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Zombie.hpp"
+#include "HumanA.hpp"
+#include "HumanB.hpp"
+#include "Weapon.hpp"
 
-Zombie	*newZombie(std::string name)
+int	main(void)
 {
-	Zombie	*Zomb = new Zombie(name);
-	//allocation sur le tas (heap) car on envoie un
-	//pointeur et on devra le delete plus tard
-	return (Zomb);
+	{
+	Weapon club = Weapon("crude spiked club");
+	HumanA bob("Bob", club);
+	bob.attack();
+	club.setType("some other type of club");
+	bob.attack();
+	}
+	{
+	Weapon club = Weapon("crude spiked club");
+	HumanB jim("Jim");
+	jim.setWeapon(club);
+	jim.attack();
+	club.setType("knife");
+	jim.attack();
+	}
+	return 0;
 }

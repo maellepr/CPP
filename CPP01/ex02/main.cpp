@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   newZombie.cpp                                      :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:37:49 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/21 12:12:14 by mapoirie         ###   ########.fr       */
+/*   Created: 2024/03/21 13:57:50 by mapoirie          #+#    #+#             */
+/*   Updated: 2024/03/21 14:08:56 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Zombie.hpp"
+#include <string>
+#include <iostream>
 
-Zombie	*newZombie(std::string name)
+int main(void)
 {
-	Zombie	*Zomb = new Zombie(name);
-	//allocation sur le tas (heap) car on envoie un
-	//pointeur et on devra le delete plus tard
-	return (Zomb);
+	std::string string = "HI THIS IS BRAIN";
+	std::string	*stringPTR = &string;
+	std::string	&stringREF = string;
+
+	std::cout << &string << std::endl
+			  << stringPTR << std::endl
+			  << &stringREF << std::endl << std::endl;
+	std::cout << string << std::endl 
+			  << *stringPTR << std::endl
+			  << stringREF << std::endl;
 }

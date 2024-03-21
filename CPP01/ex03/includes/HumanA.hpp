@@ -1,21 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   newZombie.cpp                                      :+:      :+:    :+:   */
+/*   HumanA.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:37:49 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/21 12:12:14 by mapoirie         ###   ########.fr       */
+/*   Created: 2024/03/21 14:26:52 by mapoirie          #+#    #+#             */
+/*   Updated: 2024/03/21 17:16:48 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Zombie.hpp"
+#ifndef HUMANA_H
+#define HUMANA_H
 
-Zombie	*newZombie(std::string name)
+#include "Weapon.hpp"
+
+class HumanA
 {
-	Zombie	*Zomb = new Zombie(name);
-	//allocation sur le tas (heap) car on envoie un
-	//pointeur et on devra le delete plus tard
-	return (Zomb);
-}
+	public :
+		// HumanA();
+		HumanA(std::string name, Weapon &weapon);
+		~HumanA();
+
+		void	attack() const;
+		
+	private :
+		std::string	_name;
+		Weapon		&_weapon;
+	
+};
+
+
+#endif
