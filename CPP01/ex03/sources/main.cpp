@@ -6,13 +6,13 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:29:35 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/21 17:18:02 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:34:58 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "Weapon.hpp"
 #include "HumanA.hpp"
 #include "HumanB.hpp"
-#include "Weapon.hpp"
 
 int	main(void)
 {

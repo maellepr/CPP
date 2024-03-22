@@ -5,12 +5,12 @@
 #                                                     +:+ +:+         +:+      #
 #    By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/03/20 15:43:17 by mapoirie          #+#    #+#              #
-#    Updated: 2024/03/22 14:11:51 by mapoirie         ###   ########.fr        #
+#    Created: 2024/03/22 10:40:35 by mapoirie          #+#    #+#              #
+#    Updated: 2024/03/22 14:34:42 by mapoirie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = zombie
+NAME = replace
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -MMD -std=c++98
@@ -19,7 +19,7 @@ INC_PATH = ./include/
 INC = -I $(INC_PATH)
 
 SRCS_PATH = ./sources/
-SRC = main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
+SRC = main.cpp
 SRCS = $(addprefix $(SRCS_PATH), $(SRC))
 
 OBJS_PATH = ./objects/

@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:31:13 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/21 16:59:51 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:32:43 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,14 @@
 class HumanB
 {
 	public :
-		HumanB();
-		HumanB(std::string name);
-		~HumanB();
-
+		HumanB(std::string name);//constructeur sans weapon
+		~HumanB();//destructeur
+	
 		void	attack() const;
-		void	setWeapon(Weapon &weapon);
+		void	setWeapon( Weapon &aWeapon );
 	private :
-		Weapon const		*_weapon;
-		std::string	const	_name;
+		std::string	_name;
+		Weapon		*_weapon;//pointeur car weapon parfois nulle 
 };
-
 
 #endif

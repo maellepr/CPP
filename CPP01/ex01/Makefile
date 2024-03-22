@@ -6,14 +6,14 @@
 #    By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 11:18:00 by mapoirie          #+#    #+#              #
-#    Updated: 2024/03/21 12:10:25 by mapoirie         ###   ########.fr        #
+#    Updated: 2024/03/22 14:23:24 by mapoirie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = zombie
 
-CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -MMD -std=c++98
 
 INC_PATH = ./include/
 INC = -I $(INC_PATH)
@@ -26,16 +26,20 @@ OBJS_PATH = ./objects/
 OBJ = $(SRC:.cpp=.o)
 OBJS = $(addprefix $(OBJS_PATH), $(OBJ))
 
+DEPS = $(OBJS:.o=.d)
+
 all: $(OBJS_PATH) $(NAME)
 
 $(OBJS_PATH):
 	mkdir -p $(OBJS_PATH)
 
 $(OBJS_PATH)%.o: $(SRCS_PATH)%.cpp
-		${CC} ${CFLAGS} -c $< -o $@ $(INC)
+		${CXX} ${CXXFLAGS} -c $< -o $@ $(INC)
 
 $(NAME) : $(OBJS)
-		$(CC) $(CFLAGS) $(OBJS) -o $@ $(INC)
+		$(CXX) $(CXXFLAGS) $(OBJS) -o $@ $(INC)
+
+-include $(DEPS)
 
 clean:
 		rm -rf $(OBJS_PATH)

@@ -6,41 +6,28 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:30:21 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/21 17:12:46 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:06:36 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Weapon.hpp"
 
-/***Default Constructor***/
-// Weapon::Weapon()
-// {
-// 	return ;	
-// }
-
-/***Constructor***/
-Weapon::Weapon(std::string type): _type(type)
+Weapon::Weapon(std::string wType)
 {
-	// setType(type);
-	return ;
+	this->_type = wType;
 }
 
-/***Destructor***/
 Weapon::~Weapon()
 {
-	return ;
+	
 }
 
-
-std::string	Weapon::getType(void) const
+std::string Weapon::getType(void) const
 {
-	// std::string &ref = this->_type;
-	// return ref;
 	return this->_type;
 }
 
-void	Weapon::setType(std::string type)
+void	Weapon::setType(std::string newType)
 {
-	this->_type = type;
-	return ;
+	this->_type = newType;
 }

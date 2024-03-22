@@ -6,31 +6,46 @@
 #    By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/21 14:01:18 by mapoirie          #+#    #+#              #
-#    Updated: 2024/03/21 14:06:42 by mapoirie         ###   ########.fr        #
+#    Updated: 2024/03/22 14:26:22 by mapoirie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = brain
 
-CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+CXX = c++
+CXXFLAGS = -Wall -Wextra -Werror -MMD -std=c++98
 
-SRCS = main.cpp
-OBJS = $(SRCS:.cpp=.o)
+INC_PATH = ./includes/
+INC = -I $(INC_PATH)
+
+SRCS_PATH = ./sources/
+SRC = main.cpp
+SRCS = $(addprefix $(SRCS_PATH), $(SRC))
+
+OBJS_PATH = ./objects/
+OBJ = $(SRC:.cpp=.o)
+OBJS = $(addprefix $(OBJS_PATH), $(OBJ))
+
+DEPS = $(OBJS:.o=.d)
+
+all: $(OBJS_PATH) $(NAME)
+
+$(OBJS_PATH):
+	mkdir -p $(OBJS_PATH)
+
+$(OBJS_PATH)%.o: $(SRCS_PATH)%.cpp
+		${CXX} ${CXXFLAGS} -c $< -o $@ $(INC)
 
 $(NAME) : $(OBJS)
-		$(CC) -o $(NAME) $(CFLAGS) $(OBJS)
+		$(CXX) $(CXXFLAGS) $(OBJS) -o $@ $(INC)
 
-all: $(NAME)
-
-%.o: %.cpp
-		${CC} ${CFLAGS} -c $< -o $@
+-include $(DEPS)
 
 clean:
-		rm -f $(OBJS)
+		rm -rf $(OBJS_PATH)
 
 fclean:
-		rm -f $(NAME) $(OBJS)
+		rm -rf $(NAME) $(OBJS_PATH)
 	
 re: fclean
 		make all
