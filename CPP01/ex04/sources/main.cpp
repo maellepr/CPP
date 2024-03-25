@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:54:32 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/22 16:47:13 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/25 09:56:40 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	checkString(std::string s1, std::string s2)
 	}
 	if (s2.empty())
 	{
-		std::cout << "La string qui remplace est nulle, entrer une string non nulle" << std::endl;
+		std::cout << "La string qui doit etre remplacee est nulle, entrez une string non nulle" << std::endl;
 		return -1;
 	}
 	return 0;
@@ -51,16 +51,18 @@ int	replaceString(std::ifstream *ifs, std::ofstream *ofs, std::string s1, std::s
 	size_t		i;
 	
 	pos = 0;
-	while (std::getline(ifs, line))
+	while (std::getline(*ifs, line))//tant qu'il y a des lignes, on lit ligne apres ligne
 	{
 		i = 0;
-		while (i < line.size())
+		if (ifs->fail())
+			return -1;
+		while (i < line.size())//on va lire char par char, tant qu'il y en a 
 		{
-			pos = line.find(i);
+			pos = line.find(s1, i);//cherche l'occurence s1 a partir de l'index i
 			if (pos != std::string::npos)// si on a trouve une occurence
 			{
-				*ofs << line.substr(i, pos - i) << s2;// i = index de debut
-				i = pos + s2.size();
+				*ofs << line.substr(i, pos - i) << s2;// on ecrit dans le outfile
+				i = pos + s1.size();// on avance l'index de la taille de s1 pour passer a la suite dans le infile
 			}
 			else// sinon
 			{
@@ -71,6 +73,7 @@ int	replaceString(std::ifstream *ifs, std::ofstream *ofs, std::string s1, std::s
 		if (!ifs->eof())
 			*ofs << std::endl;
 	}
+	return 0;
 }
 
 int main(int ac, char **av)
@@ -84,7 +87,7 @@ int main(int ac, char **av)
 	std::string	s1 = av[2];
 	std::string s2 = av[3];
 	
-	std::ifstream ifs(inputFile);
+	std::ifstream ifs(inputFile.c_str());
 	std::ofstream ofs("replaceFile");
 	
 	if (checkString(s1, s2))

@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Harl.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:23:15 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/25 14:12:19 by mapoirie         ###   ########.fr       */
+/*   Created: 2024/03/25 10:04:48 by mapoirie          #+#    #+#             */
+/*   Updated: 2024/03/25 11:40:32 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Zombie.hpp"
+#ifndef HARL_HPP
+#define HARL_HPP
 
-Zombie*	newZombie(std::string name);
-void	randomChump(std::string name);
+#include <string>
+#include <iostream>
 
-int main(void)
-{
-	Zombie	*Zomb1 = newZombie("Alex");//allocation avec new (sur le tas heap)
-	// Zombie	Zomb3;//Zombie sans nom qui utilise le constructeur par default
+class Harl {
+	public :
+		Harl();
+		~Harl();
+		void	complain(std::string level);
 
-	Zomb1->announce();
-	randomChump("Alix");
-	
-	delete Zomb1;
-}
+	private :
+		void	_debug(void);
+		void	_info(void);
+		void	_warning(void);
+		void	_error(void);
+		typedef void (Harl::*ptr_f)(void);
+		ptr_f	_complaints[4];
+		//tableau de 4 qui va pointer sur chaques fonctions
+};
+
+#endif

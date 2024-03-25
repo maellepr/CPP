@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   Harl.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:23:15 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/25 14:12:19 by mapoirie         ###   ########.fr       */
+/*   Created: 2024/03/25 11:45:11 by mapoirie          #+#    #+#             */
+/*   Updated: 2024/03/25 13:47:48 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Zombie.hpp"
+#ifndef HARL_HPP
+#define HARL_HPP
 
-Zombie*	newZombie(std::string name);
-void	randomChump(std::string name);
+#include <string>
+#include <iostream>
 
-int main(void)
+class Harl 
 {
-	Zombie	*Zomb1 = newZombie("Alex");//allocation avec new (sur le tas heap)
-	// Zombie	Zomb3;//Zombie sans nom qui utilise le constructeur par default
+	public :
+		Harl();
+		~Harl();
+		std::string level[4];
+		void	complain(int level);
 
-	Zomb1->announce();
-	randomChump("Alix");
-	
-	delete Zomb1;
-}
+	private :
+		void	_debug(void);
+		void	_info(void);
+		void	_warning(void);
+		void	_error(void);	
+};
+
+#endif

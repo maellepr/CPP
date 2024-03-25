@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 10:40:37 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/22 16:07:28 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/25 08:55:17 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ int	replace(std::ifstream *ifs, std::ofstream *ofs, std::string s1, std::string 
 		return -1;
 	}
 	while (std::getline(*ifs, line))
-	{
-		
-		
+	{	
 		if (ifs->fail())
 			return -1;
 		i = 0;

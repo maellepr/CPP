@@ -5,23 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:23:15 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/25 14:12:19 by mapoirie         ###   ########.fr       */
+/*   Created: 2024/03/25 11:44:20 by mapoirie          #+#    #+#             */
+/*   Updated: 2024/03/25 13:50:38 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Zombie.hpp"
+#include <string>
+#include <sstream>
+#include "Harl.hpp"
 
-Zombie*	newZombie(std::string name);
-void	randomChump(std::string name);
-
-int main(void)
+int main(int ac, char **av)
 {
-	Zombie	*Zomb1 = newZombie("Alex");//allocation avec new (sur le tas heap)
-	// Zombie	Zomb3;//Zombie sans nom qui utilise le constructeur par default
-
-	Zomb1->announce();
-	randomChump("Alix");
+	if (ac != 2)
+	{
+		std::cout << "The program takes one argument" << std::endl;	
+		return (-1);
+	}
+	int level;
+	Harl Harl;
 	
-	delete Zomb1;
+	// std::string s = av[1];
+	// std::istringstream f(s);
+	// f >> level;
+
+	// if (f.fail() || (level < 1 || level > 4))
+	// 	std::cout << "The argument should be a number between 1 and 4" << std::endl;
+	level = 0;
+	for (int i = 0; i < 4; i++)
+	{
+		if (av[1] == Harl.level[i])
+			level = i + 1;
+	}
+	Harl.complain(level);
+    return 0;
 }

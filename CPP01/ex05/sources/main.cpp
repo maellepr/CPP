@@ -5,23 +5,23 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:23:15 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/25 14:12:19 by mapoirie         ###   ########.fr       */
+/*   Created: 2024/03/25 10:03:28 by mapoirie          #+#    #+#             */
+/*   Updated: 2024/03/25 11:37:19 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/Zombie.hpp"
-
-Zombie*	newZombie(std::string name);
-void	randomChump(std::string name);
+#include "Harl.hpp"
 
 int main(void)
 {
-	Zombie	*Zomb1 = newZombie("Alex");//allocation avec new (sur le tas heap)
-	// Zombie	Zomb3;//Zombie sans nom qui utilise le constructeur par default
+	Harl	Harl;
 
-	Zomb1->announce();
-	randomChump("Alix");
-	
-	delete Zomb1;
+	std::cout << "DEBUGGING MESSAGE" << std::endl;
+	Harl.complain("DEBUG");
+	std::cout << std::endl << "INFO MESSAGE" << std::endl;
+	Harl.complain("INFO");
+	std::cout << std::endl << "WARNING MESSAGE" << std::endl;
+	Harl.complain("WARNING");
+	std::cout << std::endl << "ERROR MESSAGE" << std::endl;
+	Harl.complain("ERROR");
 }
