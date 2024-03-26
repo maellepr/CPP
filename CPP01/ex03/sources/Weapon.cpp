@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:30:21 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/22 10:06:36 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:17:41 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Weapon::~Weapon()
 	
 }
 
-std::string Weapon::getType(void) const
+const std::string Weapon::getType(void) const
 {
 	return this->_type;
 }

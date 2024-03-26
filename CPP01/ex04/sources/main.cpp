@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:54:32 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/25 09:56:40 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/25 16:03:54 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	openStream(std::ifstream *ifs, std::ofstream *ofs)
 	}
 	if (!ofs->is_open())
 	{
+		ifs->close();
 		std::cout << "Error opening the output file" << std::endl;
 		return -1;
 	}
@@ -31,16 +32,17 @@ int	openStream(std::ifstream *ifs, std::ofstream *ofs)
 
 int	checkString(std::string s1, std::string s2)
 {
+	(void)s2;
 	if (s1.empty())
 	{
 		std::cout << "La string a remplacer est nulle, entrez une string non nulle" << std::endl;
 		return -1;
 	}
-	if (s2.empty())
-	{
-		std::cout << "La string qui doit etre remplacee est nulle, entrez une string non nulle" << std::endl;
-		return -1;
-	}
+	// if (s2.empty())
+	// {
+	// 	std::cout << "La string qui doit etre remplacee est nulle, entrez une string non nulle" << std::endl;
+	// 	return -1;
+	// }
 	return 0;
 }
 
@@ -56,7 +58,7 @@ int	replaceString(std::ifstream *ifs, std::ofstream *ofs, std::string s1, std::s
 		i = 0;
 		if (ifs->fail())
 			return -1;
-		while (i < line.size())//on va lire char par char, tant qu'il y en a 
+		while (i < line.size())
 		{
 			pos = line.find(s1, i);//cherche l'occurence s1 a partir de l'index i
 			if (pos != std::string::npos)// si on a trouve une occurence
@@ -88,7 +90,7 @@ int main(int ac, char **av)
 	std::string s2 = av[3];
 	
 	std::ifstream ifs(inputFile.c_str());
-	std::ofstream ofs("replaceFile");
+	std::ofstream ofs(inputFile.append(".replace").c_str());
 	
 	if (checkString(s1, s2))
 		return -1;

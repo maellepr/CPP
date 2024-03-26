@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:30:54 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/22 10:33:11 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:16:16 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 HumanB::HumanB(std::string name) : _name(name)
 {
-
+	return ;
 }
 
 HumanB::~HumanB()
 {
-	
+	return ;	
 }
 
 void	HumanB::attack() const

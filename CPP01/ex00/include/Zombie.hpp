@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 15:49:57 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/21 10:49:17 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:06:10 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,8 @@ class Zombie {
         std::string _name;
     
 };
+
+Zombie*	newZombie(std::string name);
+void	randomChump(std::string name);
 
 #endif

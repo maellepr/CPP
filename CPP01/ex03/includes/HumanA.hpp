@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 14:26:52 by mapoirie          #+#    #+#             */
-/*   Updated: 2024/03/22 10:19:04 by mapoirie         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:16:20 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ class HumanA
 		Weapon		&_weapon;//ref car _weapon jamais nulle
 
 };
-
 
 #endif
