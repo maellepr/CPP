@@ -6,7 +6,7 @@
 #    By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/20 15:43:17 by mapoirie          #+#    #+#              #
-#    Updated: 2024/04/01 11:47:36 by mapoirie         ###   ########.fr        #
+#    Updated: 2024/04/04 10:03:10 by mapoirie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ INC_PATH = ./include/
 INC = -I $(INC_PATH)
 
 SRCS_PATH = ./sources/
-SRC = main.cpp Fixed.cpp 
+SRC = main.cpp Fixed.cpp Point.cpp bsp.cpp 
 SRCS = $(addprefix $(SRCS_PATH), $(SRC))
 
 OBJS_PATH = ./objects/
