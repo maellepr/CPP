@@ -72,6 +72,7 @@ float	Fixed::toFloat(void) const
 	return ((float)this->_nbFixedPt / (1 << _nbBits));
 }
 
+/**** << OPERATOR ****/
 std::ostream &	operator<<(std::ostream & o, Fixed const & nb)
 {
 	o << nb.toFloat();
