@@ -6,7 +6,7 @@
 
 class ClapTrap {
 	public :
-		ClapTrap(void);
+		
 		ClapTrap(std::string name);
 		ClapTrap(ClapTrap const & src);
 		~ClapTrap(void);
@@ -29,13 +29,15 @@ class ClapTrap {
 
 		void				visualizePoints();
 	private :
+		std::string			_getColor(std::string name);
+
+	protected:
+		ClapTrap(void);
+
 		std::string			_name;
 		unsigned int		_hitPoints;
 		unsigned int		_energyPoints;
-		unsigned int		_attackDamage;
-
-		std::string			_getColor(std::string name);
-
+		unsigned int		_attackDamage;		
 
 };
 
