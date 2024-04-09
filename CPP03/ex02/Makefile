@@ -1,4 +1,4 @@
-NAME = scavtrap
+NAME = fragtrap
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -MMD -std=c++98
@@ -7,7 +7,7 @@ INC_PATH = ./include/
 INC = -I $(INC_PATH)
 
 SRCS_PATH = ./sources/
-SRC = main.cpp ClapTrap.cpp ScavTrap.cpp
+SRC = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp
 SRCS = $(addprefix $(SRCS_PATH), $(SRC))
 
 OBJS_PATH = ./objects/

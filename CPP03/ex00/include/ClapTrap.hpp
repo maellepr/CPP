@@ -18,11 +18,6 @@ class ClapTrap {
 		unsigned int		getEnergyPoints(void) const;
 		unsigned int		getAttackDamage(void) const;
 
-		// void		setName(std::string name) const;
-		// void		setHitPoints(unsigned int hitPoint) const;
-		// void		setEnergyPoints(unsigned int energyPoints) const ;
-		// void		setAttackDamage(unsigned int attackDamage) const ;
-
 		void	attack(const std::string& target);
 		void	takeDamage(unsigned int amount);
 		void	beRepaired(unsigned int amount);
@@ -35,8 +30,6 @@ class ClapTrap {
 		unsigned int		_attackDamage;
 
 		std::string			_getColor(std::string name);
-
-
 };
 
 #endif

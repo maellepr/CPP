@@ -11,13 +11,13 @@ ScavTrap::ScavTrap(void) : ClapTrap()
 }
 
 /**** Constructor taking the name as parameter ****/
-ScavTrap::ScavTrap(std::string const name) : ClapTrap()
+ScavTrap::ScavTrap(std::string name) : ClapTrap(name)
 {
-	this->_name = name;
+	// this->_name = name; // decommenter si ScavTrap::_name existe
 	this->_hitPoints = 100;
 	this->_energyPoints = 50;
 	this->_attackDamage = 20;	
-	std::cout << "ScavTrap constructor called with name initialized" << std::endl;
+	std::cout << "ScavTrap constructor called with name initialized " << "\e[1m" << "\e[3m" << name << "\e[0m" <<  std::endl;
 	return ;
 }
 
@@ -36,7 +36,7 @@ ScavTrap::ScavTrap(ScavTrap const & src) : ClapTrap()
 /**** Destructor ****/
 ScavTrap::~ScavTrap(void)
 {
-	std::cout << "ScavTrap Destructor called" << std::endl;
+	std::cout << "ScavTrap Destructor called, " << "\e[1m" << "\e[3m" << this->_name <<  "\e[0m" << " was destroyed " << std::endl;
 	return ;
 }
 
@@ -53,7 +53,7 @@ ScavTrap &	ScavTrap::operator=(ScavTrap const & src)
 	return (*this);
 }
 
-void	ScavTrap::attack(const std::string& target)
+void	ScavTrap::attack(std::string& target)
 {
 	std::string color;
 	std::string color2;

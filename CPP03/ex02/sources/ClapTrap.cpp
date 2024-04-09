@@ -94,8 +94,8 @@ void	ClapTrap::attack(const std::string& target)
 	std::string color;
 	std::string color2;
 
-	color = _getColor(this->_name);
-	color2 = _getColor(target);
+	color = getColor(this->_name);
+	color2 = getColor(target);
 
 	if (this->_energyPoints == 0)
 	{
@@ -119,7 +119,7 @@ void	ClapTrap::takeDamage(unsigned int amount)
 {
 	std::string color;
 
-	color = _getColor(this->_name);
+	color = getColor(this->_name);
 
 	if (this->_hitPoints <= 0)
 		std::cout << color << "\e[1m" << "\e[3m"  << this->_name <<  "\e[0m" << " can't take any more damage !" << std::endl;		
@@ -140,7 +140,7 @@ void	ClapTrap::beRepaired(unsigned int amount)
 {
 	std::string color;
 
-	color = _getColor(this->_name);
+	color = getColor(this->_name);
 
 	if (this->_energyPoints <= 0)
 	{
@@ -153,7 +153,7 @@ void	ClapTrap::beRepaired(unsigned int amount)
 	return ;
 }
 
-std::string	ClapTrap::_getColor(std::string name)
+std::string	ClapTrap::getColor(std::string name)
 {
 	std::string	color;
 	
@@ -161,6 +161,8 @@ std::string	ClapTrap::_getColor(std::string name)
 		color = "\e[38;2;255;156;241m";
 	else if (name == "Bibi")
 		color = "\e[38;2;255;125;125m";
+	else if (name == "Remu")
+		color = "\e[38;2;186;255;238m";
 	else
 		color = "\e[38;2;246;255;101m";
 	return (color);
@@ -170,7 +172,7 @@ void	ClapTrap::visualizePoints()
 {
 	std::string	color;
 
-	color = _getColor(this->_name);
+	color = getColor(this->_name);
 
 	std::cout  << color << "┌─────────────────────────────────────────────────────┐" <<  "\e[0m" << std::endl;
 	std::cout << color << "│" << "\e[3m" <<  "\e[0m" << "\e[1m" ;

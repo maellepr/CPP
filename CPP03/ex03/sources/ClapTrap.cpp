@@ -1,16 +1,23 @@
 #include "../include/ClapTrap.hpp"
 
 /**** Default constructor ****/
-ClapTrap::ClapTrap(void) : _hitPoints(10), _energyPoints(10), _attackDamage(0)
+ClapTrap::ClapTrap(void) :
+_hitPoints(10),
+_energyPoints(10), 
+_attackDamage(0)
 {
 	std::cout << "Default constructor called" << std::endl;
 	return ;
 }
 
 /**** Constructor taking the name as parameter ****/
-ClapTrap::ClapTrap(std::string const name) : _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
+ClapTrap::ClapTrap(std::string name) : 
+_name(name), 
+_hitPoints(10), 
+_energyPoints(10),
+_attackDamage(0)
 {
-	std::cout << "Constructor called with name initialized" << std::endl;
+	std::cout << "Constructor called with name initialized " << "\e[1m" << "\e[3m" << name << "\e[0m" << std::endl;
 	return ;
 }
 
@@ -29,7 +36,7 @@ ClapTrap::ClapTrap(ClapTrap const & src)
 /**** Destructor ****/
 ClapTrap::~ClapTrap(void)
 {
-	std::cout << "Destructor called" << std::endl;
+	std::cout << "Destructor called, " << "\e[1m" << "\e[3m" << this->_name <<  "\e[0m" << " was destroyed" << std::endl;
 	return ;
 }
 
@@ -67,35 +74,14 @@ unsigned int	ClapTrap::getAttackDamage(void) const
 	return this->_attackDamage;
 }
 
-/**** Setter ****/
-// void	ClapTrap::setName(std::string name) const
-// {
-// 	std::cout << "Setter setName called" << std::endl;
-// 	return ;
-// }
 
-// void		setHitPoints(unsigned int hitPoint) const
-// {
-// 	return ;
-// }
-
-// void		setEnergyPoints(unsigned int energyPoints) const
-// {
-// 	return ;
-// }
-
-// void		setAttackDamage(unsigned int attackDamage) const
-// {
-// 	return ;
-// }
-
-void	ClapTrap::attack(const std::string& target)
+void	ClapTrap::attack(std::string& target)
 {
 	std::string color;
 	std::string color2;
 
-	color = _getColor(this->_name);
-	color2 = _getColor(target);
+	color = getColor(this->_name);
+	color2 = getColor(target);
 
 	if (this->_energyPoints == 0)
 	{
@@ -119,7 +105,7 @@ void	ClapTrap::takeDamage(unsigned int amount)
 {
 	std::string color;
 
-	color = _getColor(this->_name);
+	color = getColor(this->_name);
 
 	if (this->_hitPoints <= 0)
 		std::cout << color << "\e[1m" << "\e[3m"  << this->_name <<  "\e[0m" << " can't take any more damage !" << std::endl;		
@@ -140,7 +126,7 @@ void	ClapTrap::beRepaired(unsigned int amount)
 {
 	std::string color;
 
-	color = _getColor(this->_name);
+	color = getColor(this->_name);
 
 	if (this->_energyPoints <= 0)
 	{
@@ -153,7 +139,7 @@ void	ClapTrap::beRepaired(unsigned int amount)
 	return ;
 }
 
-std::string	ClapTrap::_getColor(std::string name)
+std::string	ClapTrap::getColor(std::string name)
 {
 	std::string	color;
 	
@@ -161,8 +147,12 @@ std::string	ClapTrap::_getColor(std::string name)
 		color = "\e[38;2;255;156;241m";
 	else if (name == "Bibi")
 		color = "\e[38;2;255;125;125m";
-	else
+	else if (name == "Remu")
+		color = "\e[38;2;186;255;238m";
+	else if (name == "Momo")
 		color = "\e[38;2;246;255;101m";
+	else
+		color = "\e[38;2;255;0;0m";
 	return (color);
 }
 
@@ -170,7 +160,7 @@ void	ClapTrap::visualizePoints()
 {
 	std::string	color;
 
-	color = _getColor(this->_name);
+	color = getColor(this->_name);
 
 	std::cout  << color << "┌─────────────────────────────────────────────────────┐" <<  "\e[0m" << std::endl;
 	std::cout << color << "│" << "\e[3m" <<  "\e[0m" << "\e[1m" ;
