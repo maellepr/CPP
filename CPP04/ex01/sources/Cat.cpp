@@ -1,7 +1,8 @@
 #include "../include/Cat.hpp"
+#include "../include/Brain.hpp"
 
 /**** Default constructor ****/
-Cat::Cat(void) : Animal("Cat")
+Cat::Cat(void) : Animal("Cat"), _brain(new Brain)
 {
 	std::cout << GREEN << ITAL << "Cat class : " << RESET << "default constructor called" << std::endl;
 	return ;
@@ -27,6 +28,7 @@ Cat::Cat(Cat const & src)
 Cat::~Cat(void)
 {
 	std::cout << GREEN << ITAL << "Cat class : " << RESET "Destructor called" << std::endl;
+	delete	this->_brain;
 	return ;
 }
 

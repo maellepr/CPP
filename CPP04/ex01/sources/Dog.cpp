@@ -1,7 +1,7 @@
 #include "../include/Dog.hpp"
 
 /**** Default constructor ****/
-Dog::Dog(void) : Animal("Dog")
+Dog::Dog(void) : Animal("Dog"), _brain(new Brain)
 {
 	std::cout << YELLOW << ITAL << "Dog class : " << RESET "default constructor called" << std::endl;
 	return ;
@@ -27,6 +27,7 @@ Dog::Dog(Dog const & src)
 Dog::~Dog(void)
 {
 	std::cout << YELLOW << ITAL << "Dog class : " << RESET << "destructor called" << std::endl;
+	delete	this->_brain;
 	return ;
 }
 
