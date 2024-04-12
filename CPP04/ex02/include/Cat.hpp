@@ -1,9 +1,10 @@
 #ifndef CAT_HPP
 #define CAT_HPP
 
-#include "../include/Animal.hpp"
+#include "Animal.hpp"
+#include "Brain.hpp"
 
-class Cat : public Animal
+class Cat : public AAnimal
 {
 	public :
 		Cat(void);
@@ -13,8 +14,10 @@ class Cat : public Animal
 		Cat	&	operator=(Cat const & src);
 
 		virtual void	makeSound(void) const;
-	protected :
-
+	
+		Brain *			getBrain() const;
+	private :
+		Brain	*_brain;
 };
 
 #endif

@@ -8,13 +8,14 @@ class Dog : public Animal
 {
 	public :
 		Dog(void);
-		Dog(std::string type);
 		Dog(Dog const & src);
 		virtual ~Dog(void);
 
 		Dog	&	operator=(Dog const & src);
 
 		virtual void	makeSound(void) const;
+
+		Brain *			getBrain() const;
 	private :
 		Brain	*_brain;
 };

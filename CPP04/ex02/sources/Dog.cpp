@@ -1,7 +1,7 @@
 #include "../include/Dog.hpp"
 
 /**** Default constructor ****/
-Dog::Dog(void) : Animal("Dog")
+Dog::Dog(void) : AAnimal("Dog")
 {
 	std::cout << YELLOW << ITAL << "Dog class : " << RESET << "default constructor called" << std::endl;
 	this->_brain = new Brain();
@@ -9,7 +9,7 @@ Dog::Dog(void) : Animal("Dog")
 }
 
 /**** Copy constructor ****/
-Dog::Dog(Dog const & dog) : Animal(dog)
+Dog::Dog(Dog const & dog) : AAnimal(dog)
 {
 	std::cout << YELLOW << ITAL << "Dog class : " << RESET << "copy constructor called" << std::endl;
 	this->_brain = new Brain(*dog._brain);

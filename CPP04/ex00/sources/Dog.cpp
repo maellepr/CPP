@@ -7,19 +7,11 @@ Dog::Dog(void) : Animal("Dog")
 	return ;
 }
 
-/**** Constructor taking the name as parameter ****/
-Dog::Dog(std::string const type) : Animal()
-{
-	this->_type = type;
-	std::cout << YELLOW << ITAL << "Dog class : " << RESET << "constructor called with type initialized" << std::endl;
-	return ;
-}
-
 /**** Copy constructor ****/
-Dog::Dog(Dog const & src)
+Dog::Dog(Dog const & src) : Animal()
 {
 	std::cout << YELLOW << ITAL << "Dog class : " << RESET << "copy constructor called" << std::endl;
-	this->_type = src.getType();
+	*this = src;
 	return ;
 }
 
@@ -35,7 +27,7 @@ Dog &	Dog::operator=(Dog const & src)
 {
 	std::cout << "Dog class : copy assignment operator called" << std::endl;
 	if (this != &src) {
-		this->_type = src.getType();
+		this->_type = src._type;
 	}
 	return (*this);
 }

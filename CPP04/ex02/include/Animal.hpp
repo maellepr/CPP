@@ -18,23 +18,25 @@
 
 #define RESET	"\e[0m"
 
-class Animal {
+class AAnimal {
 	public :
-		Animal(void);
-		Animal(std::string const & type);
-		Animal(Animal const & src);
-		virtual ~Animal(void);
+		AAnimal(void);
+		AAnimal(std::string const & type);
+		AAnimal(AAnimal const & src);
+		virtual ~AAnimal(void);
 
-		Animal &	operator=(Animal const & src);
+		AAnimal &	operator=(AAnimal const & src);
 		
 		std::string const	& getType(void) const;
 
 		void	getColor(void);
 
-		virtual void	makeSound(void) const;
+		virtual void	makeSound(void) const = 0;
 
 		std::string	*color;
 	protected :
+
+	
 		std::string	_type;
 
 };

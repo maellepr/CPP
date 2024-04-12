@@ -10,29 +10,29 @@ int main(void)
 {
 	{
 		std::cout << BOLD << "Creating one dog and one cat" << RESET << std::endl;
-		const Animal* j = new Dog();
-		const Animal* i = new Cat();
+		const Dog* j = new Dog();
+		const Cat* i = new Cat();
 		delete j;//should not create a leak
 		delete i;
 	}
-	std::cout << std::endl;
-	{
-		std::cout << BOLD << "Creating an array of " << NB_ANIMALS << " Animals, filled half with cats, half with dogs" << RESET << std::endl;
-		Animal	*animalArray[NB_ANIMALS];
-		for (int i = 0; i < NB_ANIMALS / 2; i++)
-			animalArray[i] = new Cat();
-		for (int i = NB_ANIMALS / 2; i < NB_ANIMALS; i++)
-			animalArray[i] = new Dog();
-		for (int i = 0; i < NB_ANIMALS / 2; i++)
-			animalArray[i]->makeSound();
-		for (int i = NB_ANIMALS / 2; i < NB_ANIMALS; i++)
-			animalArray[i]->makeSound();
-		for (int i = 0; i < NB_ANIMALS / 2; i++)
-			delete animalArray[i];
-		for (int i = NB_ANIMALS / 2; i < NB_ANIMALS; i++)
-			delete animalArray[i];
+	// std::cout << std::endl;
+	// {
+	// 	std::cout << BOLD << "Creating an array of " << NB_ANIMALS << " Animals, filled half with cats, half with dogs" << RESET << std::endl;
+	// 	AAnimal	*animalArray[NB_ANIMALS];
+	// 	for (int i = 0; i < NB_ANIMALS / 2; i++)
+	// 		animalArray[i] = new Cat();
+	// 	for (int i = NB_ANIMALS / 2; i < NB_ANIMALS; i++)
+	// 		animalArray[i] = new Dog();
+	// 	for (int i = 0; i < NB_ANIMALS / 2; i++)
+	// 		animalArray[i]->makeSound();
+	// 	for (int i = NB_ANIMALS / 2; i < NB_ANIMALS; i++)
+	// 		animalArray[i]->makeSound();
+	// 	for (int i = 0; i < NB_ANIMALS / 2; i++)
+	// 		delete animalArray[i];
+	// 	for (int i = NB_ANIMALS / 2; i < NB_ANIMALS; i++)
+	// 		delete animalArray[i];
 		
-	}
+	// }
 	std::cout << std::endl;
 	{
 		std::cout << BOLD << "Creating two cats and putting ideas in each of them to verify they both have their own deep copy" << RESET << std::endl;

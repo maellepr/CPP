@@ -1,20 +1,20 @@
-#ifndef CAT_HPP
-#define CAT_HPP
+#ifndef DOG_HPP
+#define DOG_HPP
 
 #include "Animal.hpp"
 #include "Brain.hpp"
 
-class Cat : public Animal
+class Dog : public AAnimal
 {
 	public :
-		Cat(void);
-		Cat(Cat const & src);
-		virtual ~Cat(void);
+		Dog(void);
+		Dog(Dog const & src);
+		virtual ~Dog(void);
 
-		Cat	&	operator=(Cat const & src);
+		Dog	&	operator=(Dog const & src);
 
 		virtual void	makeSound(void) const;
-	
+
 		Brain *			getBrain() const;
 	private :
 		Brain	*_brain;

@@ -1,4 +1,4 @@
-NAME = Brain
+NAME = Materia
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -MMD -std=c++98
@@ -7,7 +7,7 @@ INC_PATH = ./include/
 INC = -I $(INC_PATH)
 
 SRCS_PATH = ./sources/
-SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp Brain.cpp WrongAnimal.cpp WrongCat.cpp
+SRC = main.cpp
 SRCS = $(addprefix $(SRCS_PATH), $(SRC))
 
 OBJS_PATH = ./objects/

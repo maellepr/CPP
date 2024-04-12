@@ -1,36 +1,36 @@
 #include "../include/Animal.hpp"
 
 /**** Default constructor ****/
-Animal::Animal(void) : _type("Animal")
+AAnimal::AAnimal(void) : _type("Animal")
 {
 	std::cout << PINK << ITAL << "Animal class : " << RESET << "default constructor called"  << std::endl;
 	return ;
 }
 
 /**** Constructor taking the name as parameter ****/
-Animal::Animal(std::string const & type) : _type(type)
+AAnimal::AAnimal(std::string const & type) : _type(type)
 {
 	std::cout << PINK << ITAL << "Animal class : " << RESET << "constructor called with type initialized" << std::endl;
 	return ;
 }
 
 /**** Copy constructor ****/
-Animal::Animal(Animal const & src) 
+AAnimal::AAnimal(AAnimal const & src) 
 {
-	*this = src;
+	this->_type = src._type;
 	std::cout << PINK << ITAL << "Animal class : " << RESET << "copy constructor called" << std::endl;
 	return ;
 }
 
 /**** Destructor ****/
-Animal::~Animal(void)
+AAnimal::~AAnimal(void)
 {
 	std::cout << PINK << ITAL << "Animal class : " << RESET << "destructor called" << std::endl;
 	return ;
 }
 
 /**** Assignement operator ****/
-Animal &	Animal::operator=(Animal const & src)
+AAnimal &	AAnimal::operator=(AAnimal const & src)
 {
 	std::cout << "Animal class : copy assignment operator called" << std::endl;
 	if (this != &src) {
@@ -40,13 +40,13 @@ Animal &	Animal::operator=(Animal const & src)
 }
 
 /**** Getter ****/
-std::string const & Animal::getType(void) const 
+std::string const & AAnimal::getType(void) const 
 {
 	return this->_type;
 }
 
 /**** Other members functions ****/
-void	Animal::makeSound(void) const 
+void	AAnimal::makeSound(void) const 
 {
 	std::string	color;
 
