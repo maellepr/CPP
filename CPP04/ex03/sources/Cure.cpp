@@ -3,7 +3,7 @@
 /**** Default constructor ****/
 Cure::Cure(void) : AMateria("cure")
 {
-	std::cout << PINK << ITAL << "Cure class : " << RESET << "default constructor called"  << std::endl;
+	// std::cout << LBLUE2 << ITAL << "Cure class : " << RESET << "default constructor called"  << std::endl;
 	return ;
 }
 
@@ -11,7 +11,7 @@ Cure::Cure(void) : AMateria("cure")
 Cure::Cure(Cure const & cure) : AMateria()
 {
 	this->_type = cure._type;	
-	std::cout << PINK << ITAL << "Cure class : " << RESET << "copy constructor called" << std::endl;
+	// std::cout << LBLUE2 << ITAL << "Cure class : " << RESET << "copy constructor called" << std::endl;
 	return ;
 }
 
@@ -19,14 +19,14 @@ Cure::Cure(Cure const & cure) : AMateria()
 /**** Destructor ****/
 Cure::~Cure(void)
 {
-	std::cout << PINK << ITAL << "Cure class : " << RESET << "destructor called" << std::endl;
+	// std::cout << LBLUE2 << ITAL << "Cure class : " << RESET << "destructor called" << std::endl;
 	return ;
 }
 
 /**** Assignement operator ****/
 Cure &	Cure::operator=(Cure const & cure)
 {
-	std::cout << "Cure class : copy assignment operator called" << std::endl;
+	// std::cout << "Cure class : copy assignment operator called" << std::endl;
 	if (this != &cure) {
 		this->_type = cure._type;
 	}
@@ -35,10 +35,11 @@ Cure &	Cure::operator=(Cure const & cure)
 
 Cure* Cure::clone(void) const
 {
+	// std::cout << "A AMateria " << LBLUE2 << BOLD << "Cure" << RESET << " has been cloned !" << std::endl;
 	return new Cure();
 }
 
 void Cure::use(ICharacter& target)
 {
-	std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl; 
+	std::cout << /*LBLUE2 << BOLD <<*/ "* heals " << target.getName() << "'s wounds *" /*<< RESET*/ << std::endl; 
 }

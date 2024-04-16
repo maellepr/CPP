@@ -16,6 +16,9 @@
 #define PURPLE	"\e[38;2;255;0;217m"
 #define	GREEN	"\e[38;2;89;255;0m"
 #define	RED		"\e[38;2;255;38;0m"
+#define BLUE	"\e[38;2;0;233;255m"
+#define	LBLUE1	"\e[38;2;191;240;255m"
+#define LBLUE2	"\e[38;2;168;205;255m"
 #define ORANGE	"\e[38;2;255;166;0m"
 
 #define RESET	"\e[0m"
@@ -29,13 +32,14 @@ class AMateria
 	public:
 		AMateria(void);
 		AMateria(std::string const & type);
+		AMateria(AMateria const &amateria);
 		AMateria &	operator=(AMateria const & materia);
 		virtual ~AMateria(void);
 
 
-		std::string const & getType() const; //Returns the materia type
-		virtual AMateria* clone() const = 0;
-		virtual void use(ICharacter& target);
+		std::string const &	getType() const; //Returns the materia type
+		virtual 			AMateria* clone() const = 0;
+		virtual void 		use(ICharacter& target);
 
 };
 

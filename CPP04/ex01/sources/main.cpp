@@ -79,5 +79,19 @@ int main(void)
 		delete catCopy;
 
 	}
+
+	// std::cout << std::endl << "*** testing deep copy ***" << std::endl;
+	// Dog basic;
+	// basic.getBrain()->setIdeas(0, "blabla");
+	// std::cout << std::endl;
+	// std::cout << basic.getBrain()->getIdea(0) << std::endl;
+	// std::cout << std::endl;
+	// {
+	// 	Dog tmp = basic;
+	// 	std::cout << tmp.getBrain()->getIdea(0) << std::endl;
+
+	// }
+	// std::cout << basic.getBrain()->getIdea(0) << std::endl;
+
 	return 0;
 }
