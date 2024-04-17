@@ -10,7 +10,7 @@ Cat::Cat(void) : Animal("Cat")
 /**** Copy constructor ****/
 Cat::Cat(Cat const & src) : Animal()
 {
-	*this = src;
+	this->_type = src._type;
 	std::cout << GREEN << ITAL << "Cat class : " << RESET << "copy constructor called" << std::endl;
 	return ;
 }

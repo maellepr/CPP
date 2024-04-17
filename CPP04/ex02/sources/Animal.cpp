@@ -46,16 +46,16 @@ std::string const & AAnimal::getType(void) const
 }
 
 /**** Other members functions ****/
-void	AAnimal::makeSound(void) const 
-{
-	std::string	color;
+// void	AAnimal::makeSound(void) const 
+// {
+// 	std::string	color;
 
-	if (this->_type == "Cat")
-		color = GREEN;
-	else if (this->_type == "Dog")
-		color = YELLOW;
-	else if (this->_type == "Animal")
-		color = PINK;
+// 	if (this->_type == "Cat")
+// 		color = GREEN;
+// 	else if (this->_type == "Dog")
+// 		color = YELLOW;
+// 	else if (this->_type == "Animal")
+// 		color = PINK;
 
-	std::cout << BOLD << color << this->_type << RESET << BOLD << " : Random animal sound..." << RESET << std::endl;
-}
+// 	std::cout << BOLD << color << this->_type << RESET << BOLD << " : Random animal sound..." << RESET << std::endl;
+// }

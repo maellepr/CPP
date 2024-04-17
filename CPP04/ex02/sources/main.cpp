@@ -10,6 +10,7 @@ int main(void)
 {
 	{
 		std::cout << BOLD << "Creating one dog and one cat" << RESET << std::endl;
+		// AAnimal test;
 		const Dog* j = new Dog();
 		const Cat* i = new Cat();
 		delete j;//should not create a leak

@@ -12,7 +12,7 @@ int main(void)
 		std::cout << BOLD << "Creating one dog and one cat" << RESET << std::endl;
 		const Animal* j = new Dog();
 		const Animal* i = new Cat();
-		delete j;//should not create a leak
+		delete j;
 		delete i;
 	}
 	std::cout << std::endl;
@@ -80,18 +80,29 @@ int main(void)
 
 	}
 
-	// std::cout << std::endl << "*** testing deep copy ***" << std::endl;
-	// Dog basic;
-	// basic.getBrain()->setIdeas(0, "blabla");
-	// std::cout << std::endl;
-	// std::cout << basic.getBrain()->getIdea(0) << std::endl;
-	// std::cout << std::endl;
-	// {
-	// 	Dog tmp = basic;
-	// 	std::cout << tmp.getBrain()->getIdea(0) << std::endl;
+	std::cout << std::endl << "*** testing deep copy with copy assignement ***" << std::endl;
+	Dog basic;
+	basic.getBrain()->setIdeas(0, "blabla");
+	std::cout << basic.getBrain()->getIdea(0) << std::endl;
+	{
+		Dog tmp = basic;
+		std::cout << tmp.getBrain()->getIdea(0) << std::endl;
 
-	// }
-	// std::cout << basic.getBrain()->getIdea(0) << std::endl;
+	}
+	std::cout << basic.getBrain()->getIdea(0) << std::endl;
+
+
+	std::cout << std::endl << "*** testing deep copy with copy constructor ***" << std::endl;
+	Dog dog;
+	dog.getBrain()->setIdeas(0, "blabla");	
+
+	std::cout << dog.getBrain()->getIdea(0) << std::endl;
+	{
+		Dog copyDog = Dog(dog);
+		std::cout << copyDog.getBrain()->getIdea(0) << std::endl;
+
+	}
+	std::cout << dog.getBrain()->getIdea(0) << std::endl;
 
 	return 0;
 }

@@ -11,7 +11,7 @@ Dog::Dog(void) : Animal("Dog")
 Dog::Dog(Dog const & src) : Animal()
 {
 	std::cout << YELLOW << ITAL << "Dog class : " << RESET << "copy constructor called" << std::endl;
-	*this = src;
+	this->_type = src._type;
 	return ;
 }
 
@@ -26,9 +26,8 @@ Dog::~Dog(void)
 Dog &	Dog::operator=(Dog const & src)
 {
 	std::cout << "Dog class : copy assignment operator called" << std::endl;
-	if (this != &src) {
+	if (this != &src)
 		this->_type = src._type;
-	}
 	return (*this);
 }
 

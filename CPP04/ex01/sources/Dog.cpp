@@ -12,7 +12,7 @@ Dog::Dog(void) : Animal("Dog")
 Dog::Dog(Dog const & dog) : Animal(dog)
 {
 	std::cout << YELLOW << ITAL << "Dog class : " << RESET << "copy constructor called" << std::endl;
-	this->_brain = new Brain(*(dog._brain));
+	this->_brain = new Brain(*dog._brain);
 	this->_type = dog._type;
 	return ;
 }

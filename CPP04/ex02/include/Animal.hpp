@@ -35,8 +35,6 @@ class AAnimal {
 
 		std::string	*color;
 	protected :
-
-	
 		std::string	_type;
 
 };

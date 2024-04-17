@@ -21,7 +21,7 @@ class Character : public ICharacter
 		void				unequip(int idx);
 		void 				use(int idx, ICharacter& target);
 		void				displayInventory(void) const;
-	protected ://prive ou protected ?
+	protected :
 		std::string			_name;//
 		static int const	_inventorySize = 4;
 		AMateria *			_inventory[_inventorySize];

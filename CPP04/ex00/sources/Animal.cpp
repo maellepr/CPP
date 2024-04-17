@@ -20,7 +20,7 @@ Animal::Animal(std::string const type) : _type(type)
 Animal::Animal(Animal const & src) 
 {
 	std::cout << PINK << ITAL << "Animal class : " << RESET << "copy constructor called" << std::endl;
-	this->_type = src.getType();
+	this->_type = src._type;
 	return ;
 }
 
@@ -36,7 +36,7 @@ Animal &	Animal::operator=(Animal const & src)
 {
 	std::cout << "Animal class : copy assignment operator called" << std::endl;
 	if (this != &src) {
-		this->_type = src.getType();
+		this->_type = src._type;
 	}
 	return (*this);
 }

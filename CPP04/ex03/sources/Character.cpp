@@ -1,7 +1,7 @@
 #include "../include/Character.hpp"
 
 /**** Default constructor ****/
-Character::Character(void) : _name("characterName")
+Character::Character(void) : _name("noName")
 {
 	this->_setEmptyInventory();
 	// std::cout << GREEN << ITAL << "Character class : " << RESET << "default constructor called"  << std::endl;

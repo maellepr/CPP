@@ -29,14 +29,12 @@ class Animal {
 		
 		std::string const	& getType(void) const;
 
-		void	getColor(void);
-
 		virtual void	makeSound(void) const;
 
 		std::string	*color;
 	protected :
 		std::string	_type;
-
+		void	getColor(void);
 };
 
 #endif

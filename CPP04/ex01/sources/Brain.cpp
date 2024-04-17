@@ -26,10 +26,10 @@ Brain::~Brain(void)
 Brain &	Brain::operator=(Brain const & src)
 {
 	std::cout << "Brain class : copy assignment operator called" << std::endl;
-	// if (this != &src) {
+	if (this != &src) {
 		for (int i = 0; i < nb_ideas; i++)
 			this->_ideas[i] = src._ideas[i];
-	// }
+	}
 	return (*this);
 }
 
