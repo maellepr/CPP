@@ -1,75 +1,56 @@
 #include "../include/Bureaucrat.hpp"
-
-void	TestForm(std::string name, const int to_sign, const int to_exec)
-{
-	std::cout << "-- Trying to create a form named " << name << " with a grade required to sign of " << to_sign << " and a grade required to execute " << to_exec << " --" << std::endl;
-	try 
-	{
-		Form f(name, to_sign, to_exec);
-		std::cout << f << "successfully created !" << std::endl;
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << RED << "Exception : " << e.what() << RESET << std::endl;
-	}
-}
+#include "../include/ShrubberyCreationForm.hpp"
+#include "../include/RobotomyRequestForm.hpp"
+#include "../include/PresidentialPardonForm.hpp"
 
 int main(void)
 {
-	std::cout << std::endl << BOLD << "*** Form test with default constructor ***" << RESET << std::endl;
-	{
-		Form	f;
-		std::cout << "Default form is: " << f;
-	}
-	std::cout << std::endl << BOLD << "*** Form test with name, grade required to sign and to execute initialization constructor ***" << RESET << std::endl;
-	{
-		// should succeed
-		TestForm("Gagao", 10, 100);
-		TestForm("Momo", 3, 48);
-		// should fail
-		TestForm("Bibi", -8, 1);
-		TestForm("Jolie", 90, 0);
-		TestForm("Michelle", 151, 2);
-		TestForm("Yum", 50, 180);
-	}
-	std::cout << std::endl << BOLD << "*** Form test copy constructor ***" << RESET << std::endl;
-	{
-		Form f("Normal form", 98, 100);
-		std::cout << " Form is " << f << std::endl;
-		Form fCopy(f);
-		std::cout << " Form is " << fCopy << std::endl;
+	std::cout << BOLD << "--- Creation of the three kind of forms ---" << RESET << std::endl;
+	ShrubberyCreationForm shrubbery("home");
+	RobotomyRequestForm robotomy("robot");
+	PresidentialPardonForm president("pardon");
 
-	}
-	// std::cout << std::endl << BOLD << "*** Form test copy assignement ***" << RESET << std::endl;
-	// {
-	// 	Form f("Mimi", 64, 47);
-	// 	Form fCopy;
-	// 	std::cout << " Form is " << f << std::endl;
-	// 	std::cout << " Form is " << fCopy << std::endl;
-	// 	fCopy = f;
-	// 	std::cout << " Form is " << fCopy << std::endl;
-	// }
-	std::cout << std::endl << BOLD << "*** Test Bureaucrat to sign Form ***" << RESET << std::endl;
-	{
-		Form f1("Average form", 75, 75);
-		Form f2("Easy form", 140, 140);
-		Form f3("Hard form", 10, 10);
+	std::cout << BOLD << "--- Creation of three Bureaucrates ---" << RESET << std::endl;
+	Bureaucrat b1("Gagao", 2);
+	Bureaucrat b2("Momo", 149);
+	Bureaucrat b3("Mimi", 26);
 
-		Bureaucrat b1("Gagao", 20);
-		Bureaucrat b2("Momo", 142);
-		Bureaucrat b3("Mimi", 10);
+	std::cout << BOLD << "--- Sign tests ---" << RESET << std::endl;
+	std::cout << ITAL << GREY << " *Gagao shouldn't be able to sign*" << RESET << std::endl;
+	b2.signForm(shrubbery);
+	std::cout << ITAL << GREY << " *Mimi shouldn't be able to sign*" << RESET << std::endl;
+	b3.signForm(president);
+	std::cout << ITAL << GREY << " *Mimi incremente by 1*" << RESET << std::endl;
+	b3.incrementeGrade();
+	std::cout << ITAL << GREY << " *Mimi should be able to sign*" << RESET << std::endl;
+	b3.signForm(president);
+	std::cout << ITAL << GREY << " *Mimi already signed *" << RESET << std::endl;
+	b3.signForm(president);
+	std::cout << BOLD << "--- Signing ---" << RESET << std::endl;
+	std::cout << ITAL << GREY << " *Gagao should be able to sign Robotomy*" << RESET << std::endl;
+	b1.signForm(robotomy);
+	std::cout << ITAL << GREY << " *Mimi should be able to sign Shrubbery*" << RESET << std::endl;
+	b3.signForm(shrubbery);
+	std::cout << BOLD << "--- Execution tests ---" << RESET << std::endl;
+	std::cout << ITAL << GREY << " *Momo shouldn't be able to execute President*" << RESET << std::endl;
+	b2.executeForm(president);
+	std::cout << ITAL << GREY << " *Momo shouldn't be able to execute Shrubbery*" << RESET << std::endl;
+	b2.executeForm(shrubbery);
+	std::cout << ITAL << GREY << " *Momo increment be 147*" << RESET << std::endl;
+	for (int i = 0; i < 147; i++)
+		b2.incrementeGrade();	
+	std::cout << BOLD << "--- Execution ---" << RESET << std::endl;
+	std::cout << ITAL << GREY << " *Momo should be able to execute President*" << RESET << std::endl;
+	b2.executeForm(president);
+	std::cout << ITAL << GREY << " *Momo should be able to execute Robotomy*" << RESET << std::endl;
+	b2.executeForm(robotomy);
+	std::cout << ITAL << GREY << " *Momo should be able to execute Robotomy*" << RESET << std::endl;
+	b2.executeForm(robotomy);
+	std::cout << ITAL << GREY << " *Mimi should be able to execute Robotomy*" << RESET << std::endl;
+	b3.executeForm(robotomy);
+	std::cout << ITAL << GREY << " *Gagao should be able to execute Shrubbery*" << RESET << std::endl;
+	b1.executeForm(shrubbery);
 
-		std::cout << std::endl;
-		b1.signForm(f1);
-		std::cout << std::endl;
-		b1.signForm(f1);
-		std::cout << std::endl;
-		b1.signForm(f3);
-		std::cout << std::endl;
-		b2.signForm(f2);
-		std::cout << std::endl;
-		b3.signForm(f3);
-		std::cout << std::endl;
-	}
+
 	return 0;
 }

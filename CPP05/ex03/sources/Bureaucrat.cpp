@@ -37,7 +37,7 @@ Bureaucrat::~Bureaucrat(void)
 /**** Assignement operator ****/
 Bureaucrat &	Bureaucrat::operator=(Bureaucrat const & src)
 {
-	std::cout << "Bureaucrat class : copy assignment operator called" << std::endl;
+	std::cout << YELLOW << ITAL << "Bureaucrat class : " << RESET << "copy assignment operator called" << std::endl;
 	if (this != &src)
 	{
 		// this->_name = src._name;
