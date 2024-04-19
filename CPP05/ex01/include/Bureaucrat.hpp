@@ -18,9 +18,12 @@
 
 #define RESET	"\e[0m"
 
+#include "Form.hpp"
 #include <iostream>
 #include <string>
 #include <stdexcept>
+
+class Form;
 
 class Bureaucrat
 {
@@ -32,11 +35,13 @@ class Bureaucrat
 
 		Bureaucrat	 &	operator=(Bureaucrat const & src);
 		
-		const std::string	getName() const;//private?
-		int	getGrade() const;//private?
+		const std::string	getName() const;
+		int					getGrade() const;
 
 		void	incrementeGrade(void);
 		void	decrementeGrade(void);
+
+		void	signForm(Form &form) const;
 
 		class GradeTooHighException : public std::exception
 		{
@@ -48,12 +53,12 @@ class Bureaucrat
 			public:
 				virtual const char* what() const throw();
 		};
-
+		static const int	_lowestGrade = 150;
+		static const int	_highestGrade = 1;
 	private :
 		const std::string	_name;
 		int					_grade;//has to be between 1 and 150
-		static const int	_lowestGrade = 150;
-		static const int	_highestGrade = 1;
+
 };
 
 std::ostream &	operator<<(std::ostream & os, Bureaucrat const & src);

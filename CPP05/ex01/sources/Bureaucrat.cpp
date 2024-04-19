@@ -1,14 +1,14 @@
 #include "../include/Bureaucrat.hpp"
 
 /**** Default constructor ****/
-Bureaucrat::Bureaucrat(void): _name("GenericName"), _grade(this->_lowestGrade)
+Bureaucrat::Bureaucrat(void): _name("no name"), _grade(this->_lowestGrade)
 {
 	std::cout << YELLOW << ITAL << "Bureaucrat class : " << RESET << "default constructor called" << std::endl;
 	return ;
 }
 
 /**** Constructor with name and grade initialization ****/
-Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name)
+Bureaucrat::Bureaucrat(const std::string name, int grade) : _name(name)
 {
 	std::cout << YELLOW << ITAL << "Bureaucrat class : " << RESET << "constructor called with name and grade initialization" << std::endl;
 	if (grade < this->_highestGrade)
@@ -92,4 +92,17 @@ void	Bureaucrat::decrementeGrade(void)
 	else
 		throw Bureaucrat::GradeTooLowException();
 	return ;
+}
+
+void	Bureaucrat::signForm(Form &form) const
+{
+	try
+	{
+		form.beSigned(*this);
+		std::cout << *this << " signed " << form << std::endl;
+	}
+	catch (std::exception const & e)
+	{
+		std::cout << *this << " couldn't sign " << form << " because " << e.what() << std::endl;
+	}
 }
