@@ -7,9 +7,9 @@
 int main(void)
 {
 	Intern someRandomIntern;
-	Form* rrf;
+	AForm* rrf;
 	rrf = someRandomIntern.makeForm("robotomy request", "Bender");
-
+	
 	// std::cout << BOLD << "--- Creation of the three kind of forms ---" << RESET << std::endl;
 	// ShrubberyCreationForm shrubbery("home");
 	// RobotomyRequestForm robotomy("robot");
