@@ -6,7 +6,7 @@ void	TestForm(std::string name, const int to_sign, const int to_exec)
 	try 
 	{
 		Form f(name, to_sign, to_exec);
-		std::cout << f << "successfully created !" << std::endl;
+		std::cout << f << " successfully created !" << std::endl;
 	}
 	catch(const std::exception& e)
 	{
@@ -24,13 +24,13 @@ int main(void)
 	std::cout << std::endl << BOLD << "*** Form test with name, grade required to sign and to execute initialization constructor ***" << RESET << std::endl;
 	{
 		// should succeed
-		TestForm("Gagao", 10, 100);
-		TestForm("Momo", 3, 48);
+		TestForm("form1", 10, 100);
+		TestForm("form2", 3, 48);
 		// should fail
-		TestForm("Bibi", -8, 1);
-		TestForm("Jolie", 90, 0);
-		TestForm("Michelle", 151, 2);
-		TestForm("Yum", 50, 180);
+		TestForm("form3", -8, 1);
+		TestForm("form4", 90, 0);
+		TestForm("form5", 151, 2);
+		TestForm("form6", 50, 180);
 	}
 	std::cout << std::endl << BOLD << "*** Form test copy constructor ***" << RESET << std::endl;
 	{

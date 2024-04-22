@@ -2,15 +2,15 @@
 
 Intern::Intern(void)
 {
-	ptr_fct[0] = &Intern::ShrubberyCreation;
-	ptr_fct[1] = &Intern::RobotomyRequest;
-	ptr_fct[2] = &Intern::PresidentialPardon;
+	ptr_fct[0] = &Intern::RobotomyRequest;
+	ptr_fct[1] = &Intern::PresidentialPardon;
+	ptr_fct[2] = &Intern::ShrubberyCreation;
 	std::cout << PURPLE << ITAL << "Intern class : " << RESET << "default constructor called" << std::endl;
 }
 
 Intern::Intern(Intern const & src)
 {
-	(void)src;
+	*this = src;
 	std::cout << PURPLE << ITAL << "Intern class : " << RESET << "copy constructor called" << std::endl;
 }
 
@@ -21,8 +21,9 @@ Intern::~Intern(void)
 
 Intern & Intern::operator=(Intern const & src)
 {
-	(void)src;
 	std::cout << PURPLE << ITAL << "Intern class : " << RESET << "copy assignment operator called" << std::endl;
+	if (this != &src)
+		*this = src;
 	return (*this);
 }
 
@@ -58,6 +59,6 @@ AForm* Intern::makeForm(std::string formName, std::string formTarget)
 	return NULL;
 }
 
-// on cree un tableau de pointeur sur fonction qui contient 
-// trois fonctions appelant chacune le constructeur d'un type 
-// de forme avec target en parametre
+/*	on cree un tableau de pointeur sur fonction qui contient 
+	trois fonctions appelant chacune le constructeur d'un type 
+	de forme avec target en parametre  */

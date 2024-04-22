@@ -41,7 +41,7 @@ class Form
 
 	private :
 		const std::string	_name;
-		bool				_signed;// not signed at construction
+		bool				_signed;
 		const int			_gradeRequiredToSign;
 		const int			_gradeRequiredToExecute;
 };

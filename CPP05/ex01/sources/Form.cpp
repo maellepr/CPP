@@ -113,5 +113,5 @@ void	Form::beSigned(Bureaucrat const &b)
 	}
 	else
 		throw Form::GradeTooLowException();
-	return 
-;}
+	return ;
+}

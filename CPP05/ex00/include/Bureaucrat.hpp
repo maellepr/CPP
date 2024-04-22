@@ -32,8 +32,8 @@ class Bureaucrat
 
 		Bureaucrat	 &	operator=(Bureaucrat const & src);
 		
-		const std::string	getName() const;//private?
-		int	getGrade() const;//private?
+		const std::string	getName() const;
+		int					getGrade() const;
 
 		void	incrementeGrade(void);
 		void	decrementeGrade(void);

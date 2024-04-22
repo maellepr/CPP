@@ -36,7 +36,7 @@ int main(void)
 	b2.executeForm(president);
 	std::cout << ITAL << GREY << " *Momo shouldn't be able to execute Shrubbery*" << RESET << std::endl;
 	b2.executeForm(shrubbery);
-	std::cout << ITAL << GREY << " *Momo increment be 147*" << RESET << std::endl;
+	std::cout << ITAL << GREY << " *Momo increment by 147*" << RESET << std::endl;
 	for (int i = 0; i < 147; i++)
 		b2.incrementeGrade();	
 	std::cout << BOLD << "--- Execution ---" << RESET << std::endl;
@@ -50,7 +50,5 @@ int main(void)
 	b3.executeForm(robotomy);
 	std::cout << ITAL << GREY << " *Gagao should be able to execute Shrubbery*" << RESET << std::endl;
 	b1.executeForm(shrubbery);
-
-
 	return 0;
 }
