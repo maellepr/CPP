@@ -49,6 +49,19 @@ int main(void)
 	std::cout << ITAL << GREY << " *Mimi should be able to execute Robotomy*" << RESET << std::endl;
 	b3.executeForm(robotomy);
 	std::cout << ITAL << GREY << " *Gagao should be able to execute Shrubbery*" << RESET << std::endl;
-	b1.executeForm(shrubbery);
+	try
+	{
+		shrubbery.execute(b1);
+		std::cout << "Gagao execute Shrubbery" << std::endl ;
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+	
+	
+	// b1.executeForm(shrubbery);
+
+
 	return 0;
 }
