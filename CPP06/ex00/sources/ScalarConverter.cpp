@@ -124,7 +124,6 @@ bool	isFloat(std::string str)
 
 void	printFromFloat(std::string str)
 {
-	int		nb;
 	float	nbf;
 	
 	std::istringstream streamf(str.erase(str.size() - 1));
@@ -136,7 +135,7 @@ void	printFromFloat(std::string str)
 	else
 		std::cout << "char: '" << static_cast<char>(nbf) << "'" << std::endl;
 	std::istringstream stream(str.erase(str.size() - 1));
-	if ((stream >> nb).fail())
+	if (nbf < std::numeric_limits<int>::min() || nbf > std::numeric_limits<int>::max())
 		std::cout << "int: impossible" << std::endl;
 	else
 		std::cout << "int: " << static_cast<int>(nbf) << std::endl;
@@ -177,7 +176,6 @@ bool	isDouble(std::string str)
 
 void	printFromDouble(std::string str)
 {
-
 	double	nbd;
 
 	std::istringstream dstream(str);
@@ -193,9 +191,12 @@ void	printFromDouble(std::string str)
 	else 
 		std::cout << "int: " << static_cast<int>(nbd) << std::endl;
 	std::istringstream fstream;
+	
 	if (nbd < static_cast<double>(std::numeric_limits<float>::min()) || nbd > static_cast<double>(std::numeric_limits<float>::max()))
-		std::cout << "float: impossible" << std::endl;
-	else 
+		std::cout << "float: impossiblexxx" << std::endl;
+	else if (static_cast<float>(nbd) == static_cast<int>(nbd))
+		std::cout << "float: " << static_cast<float>(nbd) << ".0f" << std::endl;//a voir si necessaire
+	else
 		std::cout << "float: " << static_cast<float>(nbd) << "f" << std::endl;
 	std::cout << "double: " << nbd << std::endl;
 	return ;
