@@ -1,4 +1,4 @@
-NAME = Converter
+NAME = convert
 
 CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -MMD -std=c++98

@@ -20,6 +20,7 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <stdexcept>
 
 class ScalarConverter
@@ -36,9 +37,18 @@ class ScalarConverter
 void	printIsEmpty(void);
 
 bool	isPseudoLit(std::string str);
-void	printPseudoLit(std::string str);
+void	printFromPseudoLit(std::string str);
 
 bool	isChar(std::string str);
-void	printChar(std::string str);
+void	printFromChar(std::string str);
+
+bool	isInt(std::string str);
+void	printFromInt(std::string str);
+
+bool	isFloat(std::string str);
+void	printFromFloat(std::string str);
+
+bool	isDouble(std::string str);
+void	printFromDouble(std::string str);
 
 #endif
