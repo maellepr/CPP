@@ -41,7 +41,7 @@ bool	isChar(std::string str)
 
 void	printFromChar(std::string str)
 {
-	std::cout << "char: " << str[0] << std::endl;
+	std::cout << "char: '" << str[0] << "'" << std::endl;
 	std::cout << "int: " << static_cast<int>(str[0]) << std::endl;
 	std::cout << "float: " << static_cast<float>(str[0]) << ".0f" << std::endl;
 	std::cout << "double: " << static_cast<double>(str[0]) << ".0" << std::endl;
@@ -52,9 +52,9 @@ bool	isInt(std::string str)
 	size_t		i = 0;
 	int			nb;
 	long int	nbl;
-	if (str[i] == '-')
+	if (str[i] == '-' || str[i] == '+')
 		i++;
-
+	
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
@@ -115,9 +115,11 @@ bool	isFloat(std::string str)
 	std::istringstream fstream(str.erase(str.size() - 1));
 	if ((fstream >> nbf).fail())
 		return (false);
-	if (nbf < std::numeric_limits<float>::min() || nbf > std::numeric_limits<float>::max())
+	// std::cout << "lim min nbf = " << std::numeric_limits<float>::min() << std::endl;
+	// std::cout << "lim max nbf = " << std::numeric_limits<float>::max() << std::endl;
+	// std::cout << "nbf =" << nbf << std::endl; 
+	if (nbf < -std::numeric_limits<float>::max() || nbf > std::numeric_limits<float>::max())
 		return (false);
-	
 	//std::cout << "is a float" << std::endl;
 	return (true);
 }
@@ -134,13 +136,23 @@ void	printFromFloat(std::string str)
 		std::cout << "char: Non displayable" << std::endl;
 	else
 		std::cout << "char: '" << static_cast<char>(nbf) << "'" << std::endl;
-	std::istringstream stream(str.erase(str.size() - 1));
-	if (nbf < std::numeric_limits<int>::min() || nbf > std::numeric_limits<int>::max())
-		std::cout << "int: impossible" << std::endl;
-	else
+
+	// std::istringstream stream(str.erase(str.size() - 1));
+
+	if (nbf >= std::numeric_limits<int>::min() && nbf < std::numeric_limits<int>::max())//checker si il y a d'autres cas comme ca
 		std::cout << "int: " << static_cast<int>(nbf) << std::endl;
-	std::cout << "float: " << nbf << "f" << std::endl;
-	std::cout << "double: " << nbf << std::endl;
+	else
+		std::cout << "int: impossible" << std::endl;
+
+	if (nbf == static_cast<int>(nbf))
+		std::cout << "float: " << nbf << ".0f" << std::endl;
+	else
+		std::cout << "float: " << nbf << "f" << std::endl;
+
+	if (nbf == static_cast<int>(nbf))
+		std::cout << "double: " << nbf << ".0" << std::endl;
+	else
+		std::cout << "double: " << nbf << std::endl;
 }
 
 bool	isDouble(std::string str)
@@ -168,7 +180,8 @@ bool	isDouble(std::string str)
 	std::istringstream fstream(str.erase(str.size() - 1));
 	if ((fstream >> nbd).fail())
 		return (false);
-	if (nbd < std::numeric_limits<double>::min() || nbd > std::numeric_limits<double>::max())
+	// std::cout << std::numeric_limits<double>::max() << std::endl;
+	if (nbd < -std::numeric_limits<double>::max() || nbd > std::numeric_limits<double>::max())
 		return (false);
 	//std::cout << "is a double" << std::endl;
 	return (true);
@@ -185,6 +198,7 @@ void	printFromDouble(std::string str)
 		std::cout << "char: Non displayable" << std::endl;
 	else
 		std::cout << "char: '" << static_cast<char>(nbd) << "'" << std::endl;
+	
 	std::istringstream stream(str);
 	if (nbd < static_cast<long>(std::numeric_limits<int>::min()) || nbd > static_cast<long>(std::numeric_limits<int>::max()))
 		std::cout << "int: impossible" << std::endl;
@@ -193,12 +207,16 @@ void	printFromDouble(std::string str)
 	std::istringstream fstream;
 	
 	if (nbd < static_cast<double>(std::numeric_limits<float>::min()) || nbd > static_cast<double>(std::numeric_limits<float>::max()))
-		std::cout << "float: impossiblexxx" << std::endl;
+		std::cout << "float: impossible" << std::endl;
 	else if (static_cast<float>(nbd) == static_cast<int>(nbd))
-		std::cout << "float: " << static_cast<float>(nbd) << ".0f" << std::endl;//a voir si necessaire
+		std::cout << "float: " << static_cast<float>(nbd) << ".0f" << std::endl;
 	else
 		std::cout << "float: " << static_cast<float>(nbd) << "f" << std::endl;
-	std::cout << "double: " << nbd << std::endl;
+	
+	if (nbd == static_cast<int>(nbd))
+		std::cout << "double: " << nbd << ".0" << std::endl;
+	else
+		std::cout << "double: " << nbd << std::endl;
 	return ;
 }
 
