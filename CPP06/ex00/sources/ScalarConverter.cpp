@@ -1,5 +1,10 @@
 #include "../include/ScalarConverter.hpp"
 
+ScalarConverter::ScalarConverter()
+{
+	return ;
+}
+
 bool	isPseudoLit(std::string str)
 {
 	std::string p[6] = {"-inff", "+inff", "nanf", "-inf", "+inf", "nan"};
@@ -77,7 +82,7 @@ void	printFromInt(std::string str)
 	std::istringstream stream(str);
 	stream >> nb;	
 
-	if ((nb >= 0 && nb < 33) || nb == 127)
+	if ((nb >= 0 && nb < 32) || nb == 127)
 		std::cout << "char: Non displayable" << std::endl;
 	else if (nb >= 32 && nb <= 126)
 		std::cout << "char: " << static_cast<char>(nb) << std::endl;
@@ -115,12 +120,8 @@ bool	isFloat(std::string str)
 	std::istringstream fstream(str.erase(str.size() - 1));
 	if ((fstream >> nbf).fail())
 		return (false);
-	// std::cout << "lim min nbf = " << std::numeric_limits<float>::min() << std::endl;
-	// std::cout << "lim max nbf = " << std::numeric_limits<float>::max() << std::endl;
-	// std::cout << "nbf =" << nbf << std::endl; 
 	if (nbf < -std::numeric_limits<float>::max() || nbf > std::numeric_limits<float>::max())
 		return (false);
-	//std::cout << "is a float" << std::endl;
 	return (true);
 }
 
@@ -131,15 +132,12 @@ void	printFromFloat(std::string str)
 	std::istringstream streamf(str.erase(str.size() - 1));
 	streamf >> nbf;
 
-	//std::cout << "float = " << nbf << std::endl;
 	if (nbf < 32 || nbf > 126)
 		std::cout << "char: Non displayable" << std::endl;
 	else
 		std::cout << "char: '" << static_cast<char>(nbf) << "'" << std::endl;
 
-	// std::istringstream stream(str.erase(str.size() - 1));
-
-	if (nbf >= std::numeric_limits<int>::min() && nbf < std::numeric_limits<int>::max())//checker si il y a d'autres cas comme ca
+	if (nbf >= std::numeric_limits<int>::min() && nbf < std::numeric_limits<int>::max())
 		std::cout << "int: " << static_cast<int>(nbf) << std::endl;
 	else
 		std::cout << "int: impossible" << std::endl;
@@ -180,10 +178,8 @@ bool	isDouble(std::string str)
 	std::istringstream fstream(str.erase(str.size() - 1));
 	if ((fstream >> nbd).fail())
 		return (false);
-	// std::cout << std::numeric_limits<double>::max() << std::endl;
 	if (nbd < -std::numeric_limits<double>::max() || nbd > std::numeric_limits<double>::max())
 		return (false);
-	//std::cout << "is a double" << std::endl;
 	return (true);
 }
 
@@ -193,7 +189,6 @@ void	printFromDouble(std::string str)
 
 	std::istringstream dstream(str);
 	dstream >> nbd;
-	//std::cout << "double = " << nbd << std::endl;
 	if (nbd < 32 || nbd > 126)
 		std::cout << "char: Non displayable" << std::endl;
 	else
@@ -206,7 +201,7 @@ void	printFromDouble(std::string str)
 		std::cout << "int: " << static_cast<int>(nbd) << std::endl;
 	std::istringstream fstream;
 	
-	if (nbd < static_cast<double>(std::numeric_limits<float>::min()) || nbd > static_cast<double>(std::numeric_limits<float>::max()))
+	if (nbd < -static_cast<double>(std::numeric_limits<float>::max()) || nbd > static_cast<double>(std::numeric_limits<float>::max()))
 		std::cout << "float: impossible" << std::endl;
 	else if (static_cast<float>(nbd) == static_cast<int>(nbd))
 		std::cout << "float: " << static_cast<float>(nbd) << ".0f" << std::endl;

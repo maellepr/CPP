@@ -12,9 +12,7 @@ class ScalarConverter
 	public:
 		static void	convert(std::string str);
 	private:
-		// ScalarConverter(void);
-		// ScalarConverter(ScalarConverter & src);
-		// virtual ~ScalarConverter(void);
+		ScalarConverter(void);
 
 };
 

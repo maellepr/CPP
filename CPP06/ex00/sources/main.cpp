@@ -12,6 +12,6 @@ int main(int ac, char **av)
 			std::cerr << e.what() << '\n';
 		}
 	else 
-		std::cout << "The program take only one argument\n" << std::endl;
+		std::cout << "The program take only one argument" << std::endl;
 	return (0);
 }

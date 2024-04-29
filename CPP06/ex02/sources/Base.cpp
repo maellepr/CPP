@@ -19,9 +19,9 @@ Base *	Base::generate(void)
 	Base	*base;
 
 	srand (time(NULL));
-	int nb = (rand() % 4);
+	int nb = (rand() % 3);
 
-	std::cout << "nb = " << nb << std::endl;
+	//std::cout << "nb = " << nb << std::endl;
 
 	if (nb == 1)
 		base = new A();
