@@ -17,6 +17,8 @@
 
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include <ctime>
 
 template <typename T>
 class Array
@@ -34,12 +36,11 @@ class Array
 			for (unsigned int i = 0; i < _n; i++)
 				_array[i] = 0;
 		}
-		Array(Array const & src)
+		Array(Array const & src): _n(src._n)
 		{
-			this->_n = src._n;
 			if (src._array)
 			{
-				this->_array = new T(_n);
+				this->_array = new T[_n];
 				for (unsigned int i = 0; i < _n; i++)
 					this->_array[i] = src._array[i];
 			}
@@ -56,7 +57,7 @@ class Array
 				{
 					if (_array)
 						delete [] _array;
-					this->_array = new T(_n);
+					this->_array = new T[_n];
 					for (unsigned int i = 0; i < _n; i++)
 						this->_array[i] = src._array[i];
 				}
@@ -85,7 +86,6 @@ class Array
 				throw indexOutOfBound();
 			return this->_array[n];
 		}
-
 		unsigned int	size(void) const 
 		{
 			return _n;
@@ -94,5 +94,13 @@ class Array
 		T *				_array;
 		unsigned int	_n;
 };
+
+template <typename T>
+std::ostream & operator<<(std::ostream &os, Array<T> const &src)
+{
+	for (unsigned int i = 0; i < src.size(); i++)
+		os << src[i];
+	return (os);
+}
 
 #endif

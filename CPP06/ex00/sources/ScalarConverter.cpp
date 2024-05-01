@@ -155,10 +155,11 @@ void	printFromFloat(std::string str)
 	else
 		std::cout << "char: '" << static_cast<char>(nbf) << "'" << std::endl;
 
-	if (nbf >= std::numeric_limits<int>::min() && nbf < std::numeric_limits<int>::max())
+	std::cout << "nbf = " <<  nbf << std::endl;
+	if (nbf >= static_cast<float>(std::numeric_limits<int>::min()) && nbf < static_cast<float>(std::numeric_limits<int>::max()))
 		std::cout << "int: " << static_cast<int>(nbf) << std::endl;
 	else
-		std::cout << "int: impossible" << std::endl;
+		std::cout << "int: impossiblexx" << std::endl;
 
 	if (nbf == static_cast<int>(nbf))
 		std::cout << "float: " << nbf << ".0f" << std::endl;
@@ -235,6 +236,9 @@ void	printFromDouble(std::string str)
 
 void	ScalarConverter::convert(std::string str)
 {
+	// std::cout << std::numeric_limits<float>::min() << std::endl;
+	// std::cout << -std::numeric_limits<float>::max() << std::endl;
+	// std::cout << std::numeric_limits<float>::max() << std::endl;
 	if (str.empty())
 		throw std::invalid_argument("Argument is empty");
 	if (isPseudoLit(str))
