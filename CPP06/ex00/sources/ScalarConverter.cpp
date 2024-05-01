@@ -1,8 +1,26 @@
 #include "../include/ScalarConverter.hpp"
 
-ScalarConverter::ScalarConverter()
+ScalarConverter::ScalarConverter(void)
 {
 	return ;
+}
+
+ScalarConverter::ScalarConverter(ScalarConverter const & src)
+{
+	*this = src;
+	return ;
+}
+
+ScalarConverter::~ScalarConverter(void)
+{
+	return ;
+}
+
+ScalarConverter &ScalarConverter::operator=(ScalarConverter const & src)
+{
+	if (this != &src)
+		*this = src;
+	return (*this);
 }
 
 bool	isPseudoLit(std::string str)

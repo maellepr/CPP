@@ -8,9 +8,8 @@ class Data
 	public:
 		Data(void);
 		Data(Data const & src);
-		~Data(void);
-
 		Data &operator=(Data const & src);
+		~Data(void);
 
 		int	nb;
 };

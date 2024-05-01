@@ -11,7 +11,7 @@ Serializer::Serializer(Serializer const & src)
 	return ;
 }
 
-Serializer::~Serializer()
+Serializer::~Serializer(void)
 {
 	return ;
 }
