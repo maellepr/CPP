@@ -25,18 +25,13 @@ class Array
 {
 	public:	
 
-		Array(void)
+		Array(void): _array(NULL), _n(0) {}
+		Array(unsigned int n): _array(new T[n]), _n(n)
 		{
-			_array = NULL;
-			_n = 0;
-		}
-		Array(unsigned int n): _n(n)
-		{
-			_array = new T[_n];
 			for (unsigned int i = 0; i < _n; i++)
 				_array[i] = 0;
 		}
-		Array(Array const & src): _n(src._n)
+		Array(const Array & src): _n(src._n)
 		{
 			if (src._array)
 			{
@@ -48,7 +43,7 @@ class Array
 				_array = NULL;
 		}
 
-		Array &operator=(Array const & src)
+		Array &operator=(const Array & src)
 		{
 			if (this != &src)
 			{
@@ -72,6 +67,7 @@ class Array
 			if (this->_array)
 				delete [] this->_array;
 		}
+	
 		class indexOutOfBound : public std::exception
 		{
 			public: 
@@ -79,13 +75,21 @@ class Array
 				{
 					return "Wrong index";
 				}
-		};		
+		};
+
 		T &operator[](unsigned int n)
 		{
 			if (n < 0 || n >= this->_n)
 				throw indexOutOfBound();
 			return this->_array[n];
 		}
+		const T &operator[](unsigned int n) const
+		{
+			if (n < 0 || n >= this->_n)
+				throw indexOutOfBound();
+			return this->_array[n];
+		}
+
 		unsigned int	size(void) const 
 		{
 			return _n;
@@ -94,13 +98,5 @@ class Array
 		T *				_array;
 		unsigned int	_n;
 };
-
-template <typename T>
-std::ostream & operator<<(std::ostream &os, Array<T> const &src)
-{
-	for (unsigned int i = 0; i < src.size(); i++)
-		os << src[i];
-	return (os);
-}
 
 #endif
