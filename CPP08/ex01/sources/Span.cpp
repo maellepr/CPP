@@ -33,7 +33,22 @@ void	Span::addNumber(int nb)
 	if (this->tab.size() >= N)
 		throw Span::ArrayIsFull();
 	else 
-		tab.push_back(nb);
+		this->tab.push_back(nb);
+	return ;
+}
+
+void	Span::addNumber(std::vector<int> vecToAdd)
+{
+	if (this->tab.size() == N)
+		throw Span::ArrayIsFull();
+	else if ((this->tab.size() + vecToAdd.size()) > N)
+	{
+		int	availableSize = N - this->tab.size();
+		this->tab.insert(this->tab.end(), vecToAdd.begin(), vecToAdd.begin() + availableSize);
+	}
+	else
+		this->tab.insert(this->tab.end(), vecToAdd.begin(), vecToAdd.end());
+	return ;
 }
 
 int	Span::shortestSpan(void)
@@ -67,7 +82,7 @@ int	Span::longestSpan(void)
 /* Exceptions */
 const char *Span::ArrayIsFull::what(void) const throw()
 {
-	return ("Array is full ! Can't add any more number");
+	return ("No more room in the span ! Can't add any more numbers");
 }
 
 const char *Span::NoDistanceFound::what(void) const throw()

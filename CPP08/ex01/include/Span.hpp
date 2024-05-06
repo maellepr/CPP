@@ -36,6 +36,7 @@ class Span
 		~Span();
 
 		void	addNumber(int nb);
+		void	addNumber(std::vector<int> vector);
 		int		shortestSpan();
 		int		longestSpan();
 
