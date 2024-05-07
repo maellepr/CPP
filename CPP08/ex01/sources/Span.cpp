@@ -37,17 +37,20 @@ void	Span::addNumber(int nb)
 	return ;
 }
 
-void	Span::addNumber(std::vector<int> vecToAdd)
+void	Span::addNumberRange(std::vector<int> vecToAdd)
 {
+	std::vector<int>::iterator begin = vecToAdd.begin();
+	std::vector<int>::iterator end = vecToAdd.end();
+	
 	if (this->tab.size() == N)
 		throw Span::ArrayIsFull();
 	else if ((this->tab.size() + vecToAdd.size()) > N)
 	{
 		int	availableSize = N - this->tab.size();
-		this->tab.insert(this->tab.end(), vecToAdd.begin(), vecToAdd.begin() + availableSize);
+		this->tab.insert(this->tab.end(), begin, begin + availableSize);
 	}
 	else
-		this->tab.insert(this->tab.end(), vecToAdd.begin(), vecToAdd.end());
+		this->tab.insert(this->tab.end(), begin, end);
 	return ;
 }
 
@@ -62,7 +65,6 @@ int	Span::shortestSpan(void)
 			if (tab[i + 1] - tab[i] < distMin)
 				distMin = tab[i + 1] - tab[i];
 		}
-		// int	distMin = tab[1] - tab[0];// peut etre qlqchose a ajouter
 		return (distMin);
 	}
 	throw Span::NoDistanceFound();

@@ -17,7 +17,7 @@ int	easyfind(T contener, int nb)
 {
 	typename T::iterator it;
 
-	it = find(contener.begin(), contener.end(), nb);
+	it = std::find(contener.begin(), contener.end(), nb);
 	if (it != contener.end())
 		return nb;
 	throw (std::out_of_range("The nb was not find in the contener"));

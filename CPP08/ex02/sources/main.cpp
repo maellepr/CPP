@@ -7,7 +7,6 @@ int main(void)
 	mstack.push(10);
 	mstack.push(11);
 	mstack.push(12);
-	
 
 	MutantStack<int>::iterator it = mstack.begin();
 	MutantStack<int>::iterator ite = mstack.end();

@@ -26,13 +26,13 @@ int main(void)
 
 	try
 	{
-		sp2.addNumber(vec1);
+		sp2.addNumberRange(vec1);
 		std::cout << "vec1 was succesfully add to sp2 !" << std::endl;
 
-		sp2.addNumber(vec2);
+		sp2.addNumberRange(vec2);
 		std::cout << "vec2 was succesfully add to sp2 !" << std::endl;
 
-		sp2.addNumber(vec1);
+		sp2.addNumberRange(vec1);
 		std::cout << "vec1 was succesfully add to sp2 !" << std::endl;
 	}
 	catch (const std::exception &e)
