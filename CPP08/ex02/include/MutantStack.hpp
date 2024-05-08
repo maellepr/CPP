@@ -1,5 +1,5 @@
-#ifndef SPAN_HPP
-#define SPAN_HPP
+#ifndef MUTANTSTACK_HPP
+#define MUTANTSTACK_HPP
 
 #define BOLD	"\e[1m"
 #define RESET	"\e[0m"

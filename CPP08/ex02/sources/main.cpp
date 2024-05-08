@@ -92,6 +92,4 @@ int main(void)
 	// ++it;
 	// }
 	// std::list<int> s(mstack);
-
-	return 0;
 }
