@@ -6,15 +6,15 @@ int main(int ac, char **av)
 	
 	if (ac == 2)
 	{
-		try {
+		try
+		{
+			btc.initDatabase();
 			btc.readInputFile(av[1]);
 		}
-		catch (const std::exception & e)
+		catch(const std::exception& e)
 		{
-			std::cerr << e.what() << std::endl;
+			std::cerr << e.what() << '\n';
 		}
-		// if (printData() == 1)
-		// 	return 1;
 	}
 	else
 		std::cout << "Error: could not open file." << std::endl;
