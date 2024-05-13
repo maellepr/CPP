@@ -35,6 +35,18 @@ class BitcoinExchange
 				virtual const char *what() const throw(){
 					return "bad input.";}
 		};
+		class DateBelow : public std::exception
+		{
+			public :
+				virtual const char *what() const throw(){
+					return "date below available database dates";}
+		};
+		class DateAbove : public std::exception
+		{
+			public : 
+				virtual const char *what() const throw(){
+					return "date above available database dates";}
+		};
 /*Exception for pipe*/		
 		class WrongFormat : public std::exception
 		{

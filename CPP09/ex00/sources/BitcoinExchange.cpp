@@ -112,6 +112,7 @@ void	BitcoinExchange::_checkDate(const std::string date) const
 	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
 		throw BadInput();
 
+
 	std::istringstream	ss(date);
 	int			year;
 	int			month;
@@ -122,8 +123,10 @@ void	BitcoinExchange::_checkDate(const std::string date) const
 	ss.ignore();
 	ss >> day;
 	// std::cout << year << std::endl;
-	if (year < 2009 || year > 2022)
-		throw BadInput();
+	if ((year < 2009 && (month >= 1 && month <= 12) && (day >= 1 && day <= 31)) || date == "2009-01-01")
+		throw DateAbove();
+	if (year > 2022 || (year == 2022 && month > 3) || ( year == 2022 && month == 3 && (day > 29 && day < 32)))
+		throw DateBelow();
 	if (month < 1 || month > 12)
 		throw BadInput();
 	if (day < 1 || day > 31)
@@ -134,6 +137,7 @@ void	BitcoinExchange::_checkDate(const std::string date) const
 		throw BadInput();//annee bissextile
 	if (month % 2 == 0 && day > 30)
 		throw BadInput();
+	
 	// std::cout << month << std::endl;
 	// std::cout << day << std::endl;
 }
