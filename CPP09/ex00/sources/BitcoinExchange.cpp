@@ -61,11 +61,17 @@ int	BitcoinExchange::readInputFile(std::string file)
 		std::cout << "Error: could not open file." << std::endl;
 		return 1;
 	}
-	std::getline(ifs, line);
+	// std::getline(ifs, line);
+	bool i = false;
 	while (std::getline(ifs, line))
 	{
 		std::istringstream	iss(line);
+		if (line == "date | value" && i == false)
+			std::getline(ifs, line);
+		i = true;
+
 		iss >> date >> pipe >> value;
+		// std::cout << "date = " << date << " pipe = " << pipe << " value = " << value << std::endl;
 		try
 		{
 			_checkLine(line);
@@ -84,8 +90,8 @@ int	BitcoinExchange::readInputFile(std::string file)
 		{
 			std::cerr << "Error: " << e.what();
 			std::string exception = e.what();
-			if (exception == "bad input.")
-				std::cerr << " => " << date;
+			if (exception == "bad input")
+				std::cerr << " => " << line;
 			std::cerr << std::endl;
 		}
 
@@ -103,15 +109,17 @@ void	BitcoinExchange::_checkLine(const std::string line) const
 			space++;
 	}
 	if (space > 2)
-		throw WrongFormat();
+		throw BadInput();
 }
 
 void	BitcoinExchange::_checkDate(const std::string date) const
 {
 	// std::cout << "<" << date << ">" << std::endl;
 	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
+	{
+		// std::cout << "Format error\n";
 		throw BadInput();
-
+	}
 
 	std::istringstream	ss(date);
 	int			year;
@@ -122,7 +130,7 @@ void	BitcoinExchange::_checkDate(const std::string date) const
 	ss >> month;
 	ss.ignore();
 	ss >> day;
-	// std::cout << year << std::endl;
+	// std::cout << "<" << year << month << day << ">" << std::endl;
 	if ((year < 2009 && (month >= 1 && month <= 12) && (day >= 1 && day <= 31)) || date == "2009-01-01")
 		throw DateAbove();
 	if (year > 2022 || (year == 2022 && month > 3) || ( year == 2022 && month == 3 && (day > 29 && day < 32)))
@@ -132,12 +140,20 @@ void	BitcoinExchange::_checkDate(const std::string date) const
 	if (day < 1 || day > 31)
 		throw BadInput();
 	if (year % 4 != 0 && month == 2 && day > 28)
+	{
+		// std::cout << "annee non bissextile\n";
 		throw BadInput();//annee non bissextile
+	}
 	if (year % 4 == 0 && month == 2 && day > 29)
+	{
+		// std::cout << "annee bissextile \n";
 		throw BadInput();//annee bissextile
+	}
 	if (month % 2 == 0 && day > 30)
+	{
+		// std::cout << "mois pairs\n";
 		throw BadInput();
-	
+	}
 	// std::cout << month << std::endl;
 	// std::cout << day << std::endl;
 }
@@ -145,45 +161,37 @@ void	BitcoinExchange::_checkDate(const std::string date) const
 void	BitcoinExchange::_checkPipe(const std::string pipe) const
 {
 	if (pipe.size() != 1 || pipe[0] != '|')
-		throw WrongFormat();
+		throw BadInput();
 }
 
 float	BitcoinExchange::_checkValue(const std::string value) const
 {
 	// std::cout << "<" << value << ">" << std::endl;
 	if (!value.size())
-		throw WrongValueFormat();
+		throw BadInput();
+
 	int	isFloat = 0;
 	int	signNeg = 0;
 	for (unsigned int i = 0; i < value.size(); i++)
 	{
 		if ((value[i] < '0' || value[i] > '9') && value[i] != '.' && value[i] != '-')
-			throw WrongValueFormat();
+			throw BadInput();
 		if (value[i] == '.')
 			isFloat++;
 		if (value[i] == '-')
 			signNeg++;
 	}
-	if ((isFloat != 1 && isFloat != 0) || (signNeg != 0 && signNeg != 1))
-		throw WrongValueFormat();
+	if ((isFloat != 1 && isFloat != 0) || (signNeg != 0 && signNeg != 1) || value == "-" || value == "." 
+	|| (value[0] == '.') || (value[value.size() - 1] && (value[value.size() - 1] == '.' || value[value.size() - 1] == '-')))
+		throw BadInput();
 	std::istringstream	ss(value);
-	// if (isFloat == 0)
-	// {
-	// 	int	nbValue;
-	// 	ss >> nbValue;
-	// 	if (nbValue < 0)
-	// 		throw NotPositiveNb();
-	// 	if (nbValue > 1000)
-	// 		throw TooLargeNb();
-	// }
-	// else if (isFloat == 1)
-	// {
-		float nbfValue;
-		ss >> nbfValue;
-		if (nbfValue < 0.0) 
-			throw NotPositiveNb();
-		if (nbfValue > 1000.0)
-			throw TooLargeNb();
-	// }
+
+	float nbfValue;
+	ss >> nbfValue;
+	if (nbfValue < 0.0) 
+		throw NotPositiveNb();
+	if (nbfValue > 1000.0)
+		throw TooLargeNb();
+
 	return (nbfValue);
 }
