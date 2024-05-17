@@ -19,11 +19,20 @@ class PmergeMe
 		int		_oddNb;
 		// int		_insert;
 		unsigned int	_index;
+		unsigned int	low;
+		unsigned int	high;
+		unsigned int	mid;
+		unsigned int	preJacob;
+		unsigned int	ppreJacob;
+		unsigned int	tmpJacob;
 
 		void	_toVector(int ac, char **av);
 		void	_printVector(std::vector<unsigned int> vec);
-		void	_sortVector();
-		unsigned int	_doDichotomy(unsigned int low, unsigned int high, unsigned int mid);
+		void	_sortVector(void);
+		void	_doPairsVec(void);
+		void	_orderPairsVec(void);		
+		void	_doDichotomyVec(void);
+
 		// void	_sortDeque();
 	public :
 		PmergeMe(void);
