@@ -75,24 +75,37 @@ void	PmergeMe::_sortVector()
 	// 	std::cout << '	' << _vecFinal[i];
 	// std::cout << std::endl;	
 
+	//On cree le vector _pos avec les indices corresponds inf -> vecFinal
+	//inf2 inf3 inf4 inf5 inf6 inf7 infn
+	//[2]  [3]  [4]  [5]  [6]  [7]  [n] dans vecFinal
+	for (unsigned int i = 1; i < _inf.size(); i++)
+		_pos.push_back(i + 1);
+
+	std::cout << "_pos : ";
+	for (unsigned int i = 0; i < _pos.size(); i++)
+		std::cout << '	' << _pos[i];
+	std::cout << std::endl;	
+	
 	// On commence par placer indice 1
 	_vecFinal.insert(_vecFinal.begin(), _inf[1 - 1]);
 
 	preJacob = 1;
 	ppreJacob = 1;
-	tmpJacob = preJacob;
-	preJacob = tmpJacob + 2 * ppreJacob - 1;
-	ppreJacob = tmpJacob - 1;
+	tmpJacob = preJacob;// = 1
+	preJacob = tmpJacob + 2 * ppreJacob - 1;// 1 + (2 * 1) - 1 = 2
+	ppreJacob = tmpJacob - 1;// = 0
 
-	// std::cout << "_vecFinal : ";
-	// for (unsigned int i = 0; i < _vecFinal.size(); i++)
-	// 	std::cout << '	' << _vecFinal[i];	
-	// std::cout << "\nsize = " << _vecFinal.size() << std::endl;
+	std::cout << "_vecFinal : ";
+	for (unsigned int i = 0; i < _vecFinal.size(); i++)
+		std::cout << '	' << _vecFinal[i];	
+	std::cout << "\nsize = " << _vecFinal.size() << std::endl;
 
-	// std::cout << "pre = " << preJacob << " ppre = " << ppreJacob << std::endl;
+	std::cout << "pre = " << preJacob << " ppre = " << ppreJacob << std::endl;
 
 	low = 0;
-	high = _vecFinal.size() - 1; 
+	high = _vecFinal.size() - 1;
+	// high = _pos[preJacob - 1];//****
+	// std::cout << "_pos[preJacob - 1] = "<< _pos[preJacob - 1] << std::endl;
 	mid = low + (high - low) / 2;
 	_index = preJacob;
 	while (_index < _inf.size())//on remet a jour la valeur de Jacob
@@ -102,7 +115,7 @@ void	PmergeMe::_sortVector()
 			_doDichotomyVec();
 			_index--;
 		}
-		preJacob++;
+		preJacob++;//revenir aux vraies valeur de la suite Jacobstahle car on a fait -1 pour index
 		ppreJacob++;
 		tmpJacob = preJacob;
 		preJacob = tmpJacob + 2 * ppreJacob - 1;
@@ -119,7 +132,6 @@ void	PmergeMe::_sortVector()
 		}
 		// std::cout << "pre = " << preJacob << " ppre = " << ppreJacob << " _index = " << _index << std::endl;
 	}
-	
 	std::cout << "_vecFinal :: ";
 	for (unsigned int i = 0; i < _vecFinal.size(); i++)
 		std::cout << '	' << _vecFinal[i];	
@@ -217,13 +229,34 @@ void	PmergeMe::_doDichotomyVec(void)
 			high = mid;
 			mid = low + (high - low) / 2;
 		}
+		// std::cout << "low = " << low << std::endl;
+		// std::cout << "high = " << high << std::endl;
 		// std::cout << "mid = " << mid << std::endl;
 	}
-	// std::cout << "insert\n";
+	// std::cout << "_inf : ";
+	// for (unsigned int i = 0; i < _inf.size(); i++)
+	// 	std::cout << '	' << _inf[i];	
+	// std::cout << "\nsize = " << _inf.size() << std::endl;
+
+	// std::cout << "_vecFinal : ";
+	// for (unsigned int i = 0; i < _vecFinal.size(); i++)
+	// 	std::cout << '	' << _vecFinal[i];	
+	// std::cout << "\nsize = " << _vecFinal.size() << std::endl;
+	
+	// std::cout << "insert=" << _inf[_index] << " _vecFinal[mid]=" << _vecFinal[mid] << "\n";
+	// std::cout << "vecFinal size = " << _vecFinal.size() << "\n";
 	if (mid == 0 && (_inf[_index] < _vecFinal[mid]))
 		_vecFinal.insert(_vecFinal.begin(), _inf[_index]);
+	else if (mid == (_vecFinal.size() - 2) && (_inf[_index] > _vecFinal[mid]))
+	{
+		std::cout << "icii\n";
+		_vecFinal.insert(_vecFinal.begin() + mid + 2, _inf[_index]);
+	}
 	else
+	{
+		std::cout << "ici\n";
 		_vecFinal.insert(_vecFinal.begin() + mid + 1, _inf[_index]);
+	}
 	low = 0;
 	high = _vecFinal.size() - 1;
 	mid = low + (high - low) / 2;

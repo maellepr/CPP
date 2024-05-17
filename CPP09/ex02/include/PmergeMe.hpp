@@ -16,6 +16,8 @@ class PmergeMe
 		std::vector<unsigned int> _inf;
 		std::vector<unsigned int> _sup;
 
+		std::vector<unsigned int> _pos;
+
 		int		_oddNb;
 		// int		_insert;
 		unsigned int	_index;
