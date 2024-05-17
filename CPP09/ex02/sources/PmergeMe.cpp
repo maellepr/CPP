@@ -130,6 +130,7 @@ void	PmergeMe::_sortVector()
 				_index++;
 			}
 		}
+
 		// std::cout << "pre = " << preJacob << " ppre = " << ppreJacob << " _index = " << _index << std::endl;
 	}
 	std::cout << "_vecFinal :: ";
@@ -168,15 +169,15 @@ void	PmergeMe::_doPairsVec(void)
 		}
 	}
 
-	std::cout << "inf : ";
-	for (unsigned int i = 0; i < _inf.size(); i++)
-		std::cout << '	' << _inf[i];
-	std::cout << std::endl;
+	// std::cout << "inf : ";
+	// for (unsigned int i = 0; i < _inf.size(); i++)
+	// 	std::cout << '	' << _inf[i];
+	// std::cout << std::endl;
 
-	std::cout << "sup : ";
-	for (unsigned int i = 0; i < _sup.size(); i++)
-		std::cout << '	' << _sup[i];
-	std::cout << std::endl;
+	// std::cout << "sup : ";
+	// for (unsigned int i = 0; i < _sup.size(); i++)
+	// 	std::cout << '	' << _sup[i];
+	// std::cout << std::endl;
 }
 
 void	PmergeMe::_orderPairsVec(void)
@@ -229,9 +230,9 @@ void	PmergeMe::_doDichotomyVec(void)
 			high = mid;
 			mid = low + (high - low) / 2;
 		}
-		// std::cout << "low = " << low << std::endl;
-		// std::cout << "high = " << high << std::endl;
-		// std::cout << "mid = " << mid << std::endl;
+		std::cout << "low = " << low << std::endl;
+		std::cout << "high = " << high << std::endl;
+		std::cout << "mid = " << mid << std::endl;
 	}
 	// std::cout << "_inf : ";
 	// for (unsigned int i = 0; i < _inf.size(); i++)
@@ -247,7 +248,7 @@ void	PmergeMe::_doDichotomyVec(void)
 	// std::cout << "vecFinal size = " << _vecFinal.size() << "\n";
 	if (mid == 0 && (_inf[_index] < _vecFinal[mid]))
 		_vecFinal.insert(_vecFinal.begin(), _inf[_index]);
-	else if (mid == (_vecFinal.size() - 2) && (_inf[_index] > _vecFinal[mid]))
+	else if (mid == (_vecFinal.size() - 2) && (_inf[_index] > _vecFinal[mid]) && (_inf[_index] > _vecFinal[mid + 1]))
 	{
 		std::cout << "icii\n";
 		_vecFinal.insert(_vecFinal.begin() + mid + 2, _inf[_index]);
@@ -258,7 +259,7 @@ void	PmergeMe::_doDichotomyVec(void)
 		_vecFinal.insert(_vecFinal.begin() + mid + 1, _inf[_index]);
 	}
 	low = 0;
-	high = _vecFinal.size() - 1;
+	high = _vecFinal.size() - 1;//
 	mid = low + (high - low) / 2;
 }
 
