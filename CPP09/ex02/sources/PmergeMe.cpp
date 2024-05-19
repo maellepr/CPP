@@ -192,10 +192,27 @@ void	PmergeMe::_orderPairsVec(void)
 	//Trier les pairs par ordre croissant avec leur superieurs
 	// for (unsigned int i = 0; i < (_sup.size() - 1); i++)
 	unsigned int i = 0;
-	while (i < (_sup.size() - 1))
+	while (i < _sup.size())
 	{
 		int tmp;
-		if (_sup[i] > _sup[i + 1])
+		unsigned int j = i + 1;
+		while (j < _sup.size())
+		{
+			if (_sup[i] > _sup[j])
+			{
+				tmp = _sup[i];
+				_sup[i] = _sup[j];
+				_sup[j] = tmp;
+
+				tmp = _inf[i];
+				_inf[i] = _inf[j];
+				_inf[j] = tmp;
+			}
+			j++;
+		}	
+		i++;
+
+		/*if (_sup[i] > _sup[i + 1])
 		{
 			tmp = _sup[i + 1];
 			_sup[i + 1] = _sup[i];
@@ -206,19 +223,19 @@ void	PmergeMe::_orderPairsVec(void)
 			i = 0;
 		}
 		else
-			i++;
+			i++;*/
 	}
 	if (_oddNb >= 0)
 		_inf.push_back(_oddNb);
-	// std::cout << "inf : ";
-	// for (unsigned int i = 0; i < _inf.size(); i++)
-	// 	std::cout << '	' << _inf[i];
-	// std::cout << std::endl;
+	std::cout << "inf : ";
+	for (unsigned int i = 0; i < _inf.size(); i++)
+		std::cout << '	' << _inf[i];
+	std::cout << std::endl;
 
-	// std::cout << "sup : ";
-	// for (unsigned int i = 0; i < _sup.size(); i++)
-	// 	std::cout << '	' << _sup[i];
-	// std::cout << std::endl;
+	std::cout << "sup : ";
+	for (unsigned int i = 0; i < _sup.size(); i++)
+	 	std::cout << '	' << _sup[i];
+	std::cout << std::endl;
 }
 
 void	PmergeMe::_doDichotomyVec(void)
@@ -440,7 +457,24 @@ void	PmergeMe::_orderPairsDeq(void)
 	while (i < (_supd.size() - 1))
 	{
 		int tmp;
-		if (_supd[i] > _supd[i + 1])
+		unsigned int j = i + 1;
+		while (j < _supd.size())
+		{
+			if (_supd[i] > _supd[j])
+			{
+				tmp = _supd[i];
+				_supd[i] = _supd[j];
+				_supd[j] = tmp;
+
+				tmp = _infd[i];
+				_infd[i] = _infd[j];
+				_infd[j] = tmp;
+			}
+			j++;
+		}	
+		i++;
+		
+		/*if (_supd[i] > _supd[i + 1])
 		{
 			tmp = _supd[i + 1];
 			_supd[i + 1] = _supd[i];
@@ -451,7 +485,7 @@ void	PmergeMe::_orderPairsDeq(void)
 			i = 0;
 		}
 		else
-			i++;
+			i++;*/
 	}// a changer
 
 	if (_oddNbd >= 0)
