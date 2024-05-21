@@ -61,15 +61,17 @@ int	BitcoinExchange::readInputFile(std::string file)
 		std::cout << "Error: could not open file." << std::endl;
 		return 1;
 	}
-	// std::getline(ifs, line);
+	
 	bool i = false;
 	while (std::getline(ifs, line))
 	{
-		std::istringstream	iss(line);
 		if (line == "date | value" && i == false)
+		{
 			std::getline(ifs, line);
+		}
 		i = true;
 
+		std::istringstream	iss(line);
 		iss >> date >> pipe >> value;
 		// std::cout << "date = " << date << " pipe = " << pipe << " value = " << value << std::endl;
 		try
@@ -103,6 +105,8 @@ void	BitcoinExchange::_checkLine(const std::string line) const
 {
 	int	space = 0;
 
+	if (!line.size() || line.size() < 14)
+			throw BadInput();
 	for(unsigned int i = 0; i < line.size(); i++)
 	{
 		if (line[i] == ' ')
@@ -115,10 +119,16 @@ void	BitcoinExchange::_checkLine(const std::string line) const
 void	BitcoinExchange::_checkDate(const std::string date) const
 {
 	// std::cout << "<" << date << ">" << std::endl;
-	if (date.size() != 10 || date[4] != '-' || date[7] != '-')
+	if (date.size() != 10 || (date.size() > 5 && date[4] != '-') || (date.size() > 8 && date[7] != '-'))
 	{
-		// std::cout << "Format error\n";
+		// std::cout << "Format error : date.size = " << date.size() << "\n";
 		throw BadInput();
+	}
+	for (size_t i = 0; i < date.size(); i++)
+	{
+		if (!isdigit(date[i]) && (i == 0 || i == 1 || i == 2 
+		|| i == 3 || i == 5 || i == 6 || i == 8 || i == 9))
+			throw BadInput();
 	}
 
 	std::istringstream	ss(date);
@@ -130,6 +140,8 @@ void	BitcoinExchange::_checkDate(const std::string date) const
 	ss >> month;
 	ss.ignore();
 	ss >> day;
+	if (!year || !month || !day)
+		throw BadInput();
 	// std::cout << "<" << year << month << day << ">" << std::endl;
 	if ((year < 2009 && (month >= 1 && month <= 12) && (day >= 1 && day <= 31)) || date == "2009-01-01")
 		throw DateAbove();

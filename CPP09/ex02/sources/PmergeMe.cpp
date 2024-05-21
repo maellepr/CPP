@@ -25,19 +25,27 @@ PmergeMe & PmergeMe::operator=(PmergeMe const & src)
 
 void	PmergeMe::MergeInsertion(int ac, char **av)
 {
-	//ajouter un checking des valeurs entrees
+	size = ac - 1;
+	clock_t	tVec;
 	_toVector(ac, av);
-	std::cout << "Before:	";//changer de place
-	_printVector(this->_vec);//changer de place
 	_sortVector();
-	std::cout << "After:	";
-	_printVector(this->_vecFinal);
-	isSortedVec(_vecFinal);
+	tVec = clock();
 
+	clock_t tDeq;
 	_toDeque(ac, av);
 	_sortDeque();
-	isSortedDeq(_deqFinal);
+	tDeq = clock();
 
+	std::cout << "Before: ";
+	for (int i = 1; i < ac; i++)
+		std::cout << av[i] << ' ';
+	std::cout << std::endl << "After: ";
+	_printVector(this->_vecFinal);
+	isSortedVec(_vecFinal);
+	isSortedDeq(_deqFinal);
+	isSameSize(ac);
+	std::cout << "Time to process a range of " << ac - 1 << " elements with std::vector<int> : " << static_cast<float>(tVec)/CLOCKS_PER_SEC << " seconds" << std::endl;	
+	std::cout << "Time to process a range of " << ac - 1 << " elements with std::deque<int> : " << static_cast<float>(tDeq)/CLOCKS_PER_SEC << " seconds" << std::endl;
 }
 
 void	PmergeMe::_toVector(int ac, char **av)
@@ -45,8 +53,8 @@ void	PmergeMe::_toVector(int ac, char **av)
 	for (int i = 1; i < ac; i++)
 	{
 		std::istringstream iss(av[i]);
-		unsigned int		nb;
-		char				rest; 
+		int		nb;
+		char	rest; 
 		if (iss >> nb && !(iss >> rest)) 
 			this->_vec.push_back(nb);
 		else
@@ -54,13 +62,20 @@ void	PmergeMe::_toVector(int ac, char **av)
 			throw Error();
 		}
 	}
+	for (size_t i = 0; i < _vec.size(); i++)
+	{
+		if (_vec[i] < 0)
+			throw Error();
+	}
+	for (std::vector<int>::iterator it = _vec.begin(); it != _vec.end(); ++it)
+	{
+		if (find(it + 1, _vec.end(), *it) != _vec.end())
+			throw Error();
+	}
 }
 
-void	PmergeMe::_printVector(std::vector<unsigned int> vec)
+void	PmergeMe::_printVector(std::vector<int> vec)
 {
-	// for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); ++it)
-	// 	std::cout << ' ' << *it;
-
 	for (unsigned int i = 0; i < vec.size(); i++)
 		std::cout << ' ' << vec[i];
 	std::cout << std::endl;
@@ -68,89 +83,78 @@ void	PmergeMe::_printVector(std::vector<unsigned int> vec)
 
 void	PmergeMe::_sortVector()
 {
-	//ajouter le temps chronometre
 	//Fais des pairs en creant deux vectors (inf et sup)
 	_doPairsVec();
 	//Range les pairs en ordre croissant suivant les sup
-	_orderPairsVec();
+	// _orderPairsVec();
+	// std::cout << "inf : ";
+	// for(size_t i = 0; i < _inf.size(); i++)
+	// 	std::cout << _inf[i] << ' ';
+	// std::cout << "\nsup : ";
+	// for(size_t i = 0; i < _sup.size(); i++)
+	// 	std::cout << _sup[i] << ' ';
+	// std::cout << '\n';
 
+	_mergeSortVec(_sup, _inf);
+	if (_oddNb >= 0)
+		_inf.push_back(_oddNb);
+	// std::cout << "inf : ";
+	// for(size_t i = 0; i < _inf.size(); i++)
+	// 	std::cout << _inf[i] << ' ';
+	// std::cout << "\nsup : ";
+	// for(size_t i = 0; i < _sup.size(); i++)
+	// 	std::cout << _sup[i] << ' ';
+	// std::cout << '\n';
 	//Remettre tous les superieurs tries dans _vec final
 	for (unsigned int i = 0; i < _sup.size(); i++)
 		_vecFinal.push_back(_sup[i]);
 	
-	// std::cout << "vecF : ";
-	// for (unsigned int i = 0; i < _vecFinal.size(); i++)
-	// 	std::cout << '	' << _vecFinal[i];
-	// std::cout << std::endl;	
-
-	//On cree le vector _pos avec les indices corresponds inf -> vecFinal
-	//inf2 inf3 inf4 inf5 inf6 inf7 infn
-	//[2]  [3]  [4]  [5]  [6]  [7]  [n] dans vecFinal
-	// for (unsigned int i = 1; i < _inf.size(); i++)
-	// 	_pos.push_back(i + 1);
-
-	// std::cout << "_pos : ";
-	// for (unsigned int i = 0; i < _pos.size(); i++)
-	// 	std::cout << '	' << _pos[i];
-	// std::cout << std::endl;	
-	
-	// On commence par placer indice 1
-	_vecFinal.insert(_vecFinal.begin(), _inf[1 - 1]);
-
-	preJacob = 1;
-	ppreJacob = 1;
-	tmpJacob = preJacob;// = 1
-	preJacob = tmpJacob + 2 * ppreJacob - 1;// 1 + (2 * 1) - 1 = 2
-	ppreJacob = tmpJacob - 1;// = 0
-
-	// std::cout << "_vecFinal : ";
-	// for (unsigned int i = 0; i < _vecFinal.size(); i++)
-		// std::cout << '	' << _vecFinal[i];	
-	// std::cout << "\nsize = " << _vecFinal.size() << std::endl;
-
-	// std::cout << "pre = " << preJacob << " ppre = " << ppreJacob << std::endl;
+	// On commence par placer indice 0
+	_vecFinal.insert(_vecFinal.begin(), _inf[0]);
+	if (_vecFinal.size() == size)
+		return ;
+	// Puis on place l'indice 1 (1er de la suite de Jacobstahl)
+	std::vector<int>::iterator insertIt = std::upper_bound(_vecFinal.begin(), _vecFinal.end(), _inf[1]);
+	_vecFinal.insert(insertIt, _inf[1]);
+	jacob = 3;
+	preJac = 1;
 
 	low = 0;
 	high = _vecFinal.size() - 1;
-	// high = _pos[preJacob - 1];//****
-	// std::cout << "_pos[preJacob - 1] = "<< _pos[preJacob - 1] << std::endl;
 	mid = low + (high - low) / 2;
-	_index = preJacob;
-	while (_index < _inf.size())//on remet a jour la valeur de Jacob
-	{
-		while (_index > ppreJacob)//on trie les _index entre preJacob et ppreJacob _index[3] _index[2]
+	_index = jacob;
+	while (_vecFinal.size() != size)
+	{	
+		if (_index >= _inf.size() && _vecFinal.size() != size)
 		{
-			_doDichotomyVec();
-			_index--;
-		}
-		preJacob++;//revenir aux vraies valeur de la suite Jacobstahle car on a fait -1 pour index
-		ppreJacob++;
-		tmpJacob = preJacob;
-		preJacob = tmpJacob + 2 * ppreJacob - 1;
-		ppreJacob = tmpJacob - 1;		
-		_index = preJacob;
-		if (_index >= _inf.size() && _vecFinal.size() != _vec.size())
-		{
-			_index = ppreJacob + 1;
+			_index = preJac + 1;
 			while (_index < _inf.size())
 			{
 				_doDichotomyVec();
+				// std::vector<int>::iterator insertIt = std::upper_bound(_vecFinal.begin(), _vecFinal.end(), _inf[_index]);
+				// _vecFinal.insert(insertIt, _inf[_index]);				
 				_index++;
 			}
 		}
-
-		// std::cout << "pre = " << preJacob << " ppre = " << ppreJacob << " _index = " << _index << std::endl;
+		if (_vecFinal.size() == size)
+			break ;
+		while (_index > preJac)
+		{
+			_doDichotomyVec();
+			// std::vector<int>::iterator insertIt = std::upper_bound(_vecFinal.begin(), _vecFinal.end(), _inf[_index]);
+			// _vecFinal.insert(insertIt, _inf[_index]);			
+			_index--;
+		}
+		tmpJacob = jacob;
+		jacob = tmpJacob + 2 * preJac;
+		preJac = tmpJacob;
+		_index = jacob;
 	}
-	// std::cout << "_vecFinal :: ";
-	// for (unsigned int i = 0; i < _vecFinal.size(); i++)
-	// 	std::cout << '	' << _vecFinal[i];	
-	// std::cout << "\nsize = " << _vecFinal.size() << std::endl;
 }
 
 void	PmergeMe::_doPairsVec(void)
 {
 	//Faire les pairs
-	// std::cout << "size = " << _vec.size() << std::endl;
 	if (_vec.size() % 2 != 0)
 	{
 		// _inf.push_back(_vec[_vec.size()]);
@@ -158,13 +162,10 @@ void	PmergeMe::_doPairsVec(void)
 		// std::cout << "oddNb = " << _oddNb << std::endl;
 		_vec.pop_back();
 	}
-	// std::cout << "vec pop back :";
-	// for (unsigned int i = 0; i < _vec.size(); i++)
-	// 	std::cout << ' ' << _vec[i]; std::cout << std::endl;
 
 	for (unsigned int i = 0; i < _vec.size(); i+=2)
 	{
-		if (_vec[i] <= _vec[i + 1])
+		if (_vec[i] < _vec[i + 1])
 		{
 			_inf.push_back(_vec[i]);
 			_sup.push_back(_vec[i + 1]);
@@ -175,22 +176,89 @@ void	PmergeMe::_doPairsVec(void)
 			_sup.push_back(_vec[i]);
 		}
 	}
+}
 
-	// std::cout << "inf : ";
-	// for (unsigned int i = 0; i < _inf.size(); i++)
-	// 	std::cout << '	' << _inf[i];
-	// std::cout << std::endl;
+// void	PmergeMe::_mergeSortVec(std::vector<int> _sup, int low, int high)
+// {
+// 	int mid;
+// 	if (low < high)
+// 	{
+// 		mid = (low + high) / 2;
+// 		_mergeSortVec(_sup, low, mid);
+// 		_mergeSortVec(_sup, mid + 1, high);
 
-	// std::cout << "sup : ";
-	// for (unsigned int i = 0; i < _sup.size(); i++)
-	// 	std::cout << '	' << _sup[i];
-	// std::cout << std::endl;
+// 		merge(_sup, low, high, mid);
+// 	}
+// }
+
+void	PmergeMe::_mergeSortVec(std::vector<int> &_sup, std::vector<int> &_inf)
+{
+	// std::cout << "Splitting : ";
+	// for (size_t i = 0; i < _sup.size(); i++)
+	// 	std::cout << _sup[i] << ' ';
+	// std::cout << std::endl;		
+	if (_sup.size() > 1)
+	{
+		int mid = _sup.size() / 2;
+
+		std::vector<int> _supLeftHalf;
+		_supLeftHalf.assign(_sup.begin(), _sup.begin() + mid);
+
+		std::vector<int> _supRightHalf;
+		_supRightHalf.assign(_sup.begin() + mid, _sup.end());
+
+		std::vector<int> _infLeftHalf;
+		_infLeftHalf.assign(_inf.begin(), _inf.begin() + mid);
+
+		std::vector<int> _infRightHalf;
+		_infRightHalf.assign(_inf.begin() + mid, _inf.end());
+
+		_mergeSortVec(_supLeftHalf, _infLeftHalf);
+		_mergeSortVec(_supRightHalf, _infRightHalf);
+
+		size_t i = 0;
+		size_t j = 0;
+		size_t k = 0;
+		while (i < _supLeftHalf.size() && j < _supRightHalf.size())
+		{
+			if (_supLeftHalf[i] < _supRightHalf[j])
+			{
+				_sup[k] = _supLeftHalf[i];
+				_inf[k] = _infLeftHalf[i];
+				i++;
+			}
+			else{
+				// std::cout << "ici\n";
+				_sup[k] = _supRightHalf[j];
+				_inf[k] = _infRightHalf[j];			
+				j++;
+			}
+			k++;
+		}
+		while (i < _supLeftHalf.size())
+		{
+			_sup[k] = _supLeftHalf[i];
+			_inf[k] = _infLeftHalf[i];
+			i++;
+			k++;
+		}
+		while (j < _supRightHalf.size())
+		{
+			_sup[k] = _supRightHalf[j];
+			_inf[k] = _infRightHalf[j];
+			j++;
+			k++;
+		}
+	}		
+	// std::cout << "Merging : ";
+	// for (size_t i = 0; i < _sup.size(); i++)
+	// 	std::cout << _sup[i] << ' ';
+	// std::cout << std::endl;		
 }
 
 void	PmergeMe::_orderPairsVec(void)
 {
 	//Trier les pairs par ordre croissant avec leur superieurs
-	// for (unsigned int i = 0; i < (_sup.size() - 1); i++)
 	unsigned int i = 0;
 	while (i < _sup.size())
 	{
@@ -211,31 +279,9 @@ void	PmergeMe::_orderPairsVec(void)
 			j++;
 		}	
 		i++;
-
-		/*if (_sup[i] > _sup[i + 1])
-		{
-			tmp = _sup[i + 1];
-			_sup[i + 1] = _sup[i];
-			_sup[i] = tmp;
-			tmp = _inf[i + 1];
-			_inf[i + 1] = _inf[i];
-			_inf[i] = tmp;
-			i = 0;
-		}
-		else
-			i++;*/
 	}
-	if (_oddNb >= 0)
-		_inf.push_back(_oddNb);
-	std::cout << "inf : ";
-	for (unsigned int i = 0; i < _inf.size(); i++)
-		std::cout << '	' << _inf[i];
-	std::cout << std::endl;
-
-	std::cout << "sup : ";
-	for (unsigned int i = 0; i < _sup.size(); i++)
-	 	std::cout << '	' << _sup[i];
-	std::cout << std::endl;
+	// if (_oddNb >= 0)
+	// 	_inf.push_back(_oddNb);
 }
 
 void	PmergeMe::_doDichotomyVec(void)
@@ -245,59 +291,54 @@ void	PmergeMe::_doDichotomyVec(void)
 		if (_vecFinal[mid] < _inf[_index])//go moitie droite
 		{
 			low = mid;
-			// high = high;
 			mid = low + (high - low) / 2;
 		}
 		else if (_vecFinal[mid] > _inf[_index])//go moitie gauche
 		{
-			// low = low;
 			high = mid;
 			mid = low + (high - low) / 2;
 		}
-		// std::cout << "low = " << low << std::endl;
-		// std::cout << "high = " << high << std::endl;
-		// std::cout << "mid = " << mid << std::endl;
 	}
-	// std::cout << "_inf : ";
-	// for (unsigned int i = 0; i < _inf.size(); i++)
-	// 	std::cout << '	' << _inf[i];	
-	// std::cout << "\nsize = " << _inf.size() << std::endl;
-
-	// std::cout << "_vecFinal : ";
-	// for (unsigned int i = 0; i < _vecFinal.size(); i++)
-	// 	std::cout << '	' << _vecFinal[i];	
-	// std::cout << "\nsize = " << _vecFinal.size() << std::endl;
-	
-	// std::cout << "insert=" << _inf[_index] << " _vecFinal[mid]=" << _vecFinal[mid] << "\n";
-	// std::cout << "vecFinal size = " << _vecFinal.size() << "\n";
 	if (mid == 0 && (_inf[_index] < _vecFinal[mid]))
 		_vecFinal.insert(_vecFinal.begin(), _inf[_index]);
 	else if (mid == (_vecFinal.size() - 2) && (_inf[_index] > _vecFinal[mid]) && (_inf[_index] > _vecFinal[mid + 1]))
 	{
-		// std::cout << "icii\n";
 		_vecFinal.insert(_vecFinal.begin() + mid + 2, _inf[_index]);
 	}
 	else
 	{
-		// std::cout << "ici\n";
 		_vecFinal.insert(_vecFinal.begin() + mid + 1, _inf[_index]);
 	}
 	low = 0;
-	high = _vecFinal.size() - 1;//
+	high = _vecFinal.size() - 1;
 	mid = low + (high - low) / 2;
 }
 
-void	PmergeMe::isSortedVec(std::vector<unsigned int> vec)
+void	PmergeMe::isSortedVec(std::vector<int> vec)
 {
 	for (unsigned int i = 0; i < (vec.size() - 1); i++)
 	{
 		if (vec[i] > vec[i + 1])
 		{
-			std::cout << "Vec not sorted :////\n";
+			std::cout << RED "Vec not sorted :////\n" RESET;
 			return ;
 		}
 	}
-	std::cout << "Vec is sorted !\n";
+	std::cout << GREEN "Vec is sorted !\n" RESET;
+}
+
+void	PmergeMe::isSameSize(int ac)
+{
+	size_t size = ac - 1;
+
+	if (_vecFinal.size() == size)
+		std::cout << GREEN "Vec has same size !\n" RESET;
+	else
+		std::cout << RED "Vec hasn't same size\n" RESET;
+	if (_deqFinal.size() == size)
+		std::cout << GREEN "Deq has same size !\n" RESET;
+	else
+		std::cout << GREEN "Deq hasn't same size\n" RESET;
 }
 
 //--  Deque --//
@@ -318,11 +359,8 @@ void	PmergeMe::_toDeque(int ac, char **av)
 	}
 }
 
-void	PmergeMe::_printDeque(std::deque<unsigned int> deq)
+void	PmergeMe::_printDeque(std::deque<int> deq)
 {
-	// for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); ++it)
-	// 	std::cout << ' ' << *it;
-
 	for (unsigned int i = 0; i < deq.size(); i++)
 		std::cout << ' ' << deq[i];
 	std::cout << std::endl;
@@ -330,100 +368,68 @@ void	PmergeMe::_printDeque(std::deque<unsigned int> deq)
 
 void	PmergeMe::_sortDeque()
 {
-	//ajouter le temps chronometre
 	//Fais des pairs en creant deux vectors (inf et sup)
 	_doPairsDeq();
 	//Range les pairs en ordre croissant suivant les sup
-	_orderPairsDeq();
-
+	// _orderPairsDeq();
+	_mergeSortDeq(_supd, _infd);
+	if (_oddNbd >= 0)
+		_infd.push_back(_oddNbd);
 	//Remettre tous les superieurs tries dans _vec final
 	for (unsigned int i = 0; i < _supd.size(); i++)
 		_deqFinal.push_back(_supd[i]);
 	
-	// std::cout << "vecF : ";
-	// for (unsigned int i = 0; i < _vecFinal.size(); i++)
-	// 	std::cout << '	' << _vecFinal[i];
-	// std::cout << std::endl;	
-
-	//On cree le vector _pos avec les indices corresponds inf -> vecFinal
-	//inf2 inf3 inf4 inf5 inf6 inf7 infn
-	//[2]  [3]  [4]  [5]  [6]  [7]  [n] dans vecFinal
-	// for (unsigned int i = 1; i < _inf.size(); i++)
-	// 	_pos.push_back(i + 1);
-
-	// std::cout << "_pos : ";
-	// for (unsigned int i = 0; i < _pos.size(); i++)
-	// 	std::cout << '	' << _pos[i];
-	// std::cout << std::endl;	
-	
-	// On commence par placer indice 1
-	_deqFinal.insert(_deqFinal.begin(), _infd[1 - 1]);
-
-	preJacobd = 1;
-	ppreJacobd = 1;
-	tmpJacobd = preJacobd;// = 1
-	preJacobd = tmpJacobd + 2 * ppreJacobd - 1;// 1 + (2 * 1) - 1 = 2
-	ppreJacobd = tmpJacobd - 1;// = 0
-
-	// std::cout << "_vecFinal : ";
-	// for (unsigned int i = 0; i < _vecFinal.size(); i++)
-		// std::cout << '	' << _vecFinal[i];	
-	// std::cout << "\nsize = " << _vecFinal.size() << std::endl;
-
-	// std::cout << "pre = " << preJacob << " ppre = " << ppreJacob << std::endl;
+	// On commence par placer indice 0
+	_deqFinal.insert(_deqFinal.begin(), _infd[0]);
+	if (_deqFinal.size() == size)
+		return ;
+	std::deque<int>::iterator insertIt = std::upper_bound(_deqFinal.begin(), _deqFinal.end(), _infd[1]);
+	_deqFinal.insert(insertIt, _infd[1]);
+	jacobd = 3;
+	preJacd = 1;
 
 	lowd = 0;
 	highd = _deqFinal.size() - 1;
-	// high = _pos[preJacob - 1];//****
-	// std::cout << "_pos[preJacob - 1] = "<< _pos[preJacob - 1] << std::endl;
 	midd = lowd + (highd - lowd) / 2;
-	_indexd = preJacobd;
-	while (_indexd < _infd.size())//on remet a jour la valeur de Jacob
+	_indexd = jacobd;
+	while (_deqFinal.size() != size)
 	{
-		while (_indexd > ppreJacobd)//on trie les _index entre preJacob et ppreJacob _index[3] _index[2]
+		if (_indexd >= _infd.size() && _deqFinal.size() != size)
 		{
-			_doDichotomyDeq();
-			_indexd--;
-		}
-		preJacobd++;//revenir aux vraies valeur de la suite Jacobstahle car on a fait -1 pour index
-		ppreJacobd++;
-		tmpJacobd = preJacobd;
-		preJacobd = tmpJacobd + 2 * ppreJacobd - 1;
-		ppreJacobd = tmpJacobd - 1;		
-		_indexd = preJacobd;
-		if (_indexd >= _infd.size() && _deqFinal.size() != _deq.size())
-		{
-			_indexd = ppreJacobd + 1;
+			_indexd = preJacd + 1;
 			while (_indexd < _infd.size())
 			{
 				_doDichotomyDeq();
+				// std::deque<int>::iterator insertIt = std::upper_bound(_deqFinal.begin(), _deqFinal.end(), _infd[_indexd]);
+				// _deqFinal.insert(insertIt, _infd[_indexd]);
 				_indexd++;
 			}
 		}
+		if (_deqFinal.size() == size)
+			break;
+		while (_indexd > preJacd)
+		{
+			_doDichotomyDeq();
+			// std::deque<int>::iterator insertIt = std::upper_bound(_deqFinal.begin(), _deqFinal.end(), _infd[_indexd]);
+			// _deqFinal.insert(insertIt, _infd[_indexd]);			
+			_indexd--;
+		}
+		tmpJacobd = jacobd;
+		jacobd = tmpJacobd + 2 * preJacd;
+		preJacd = tmpJacobd;
+		_indexd = jacobd;
 
-		// std::cout << "pre = " << preJacob << " ppre = " << ppreJacob << " _index = " << _index << std::endl;
 	}
-	// std::cout << "_vecFinal :: ";
-	// for (unsigned int i = 0; i < _vecFinal.size(); i++)
-	// 	std::cout << '	' << _vecFinal[i];	
-	// std::cout << "\nsize = " << _vecFinal.size() << std::endl;
 }
 
 void	PmergeMe::_doPairsDeq(void)
 {
 	//Faire les pairs
-	// std::cout << "size = " << _vec.size() << std::endl;
 	if (_deq.size() % 2 != 0)
 	{
-		// _inf.push_back(_vec[_vec.size()]);
 		_oddNbd = _deq[_deq.size() - 1];
-		// std::cout << "oddNb = " << _oddNb << std::endl;
 		_deq.pop_back();
 	}
-	// std::cout << "vec pop back :";
-	// for (unsigned int i = 0; i < _vec.size(); i++)
-	// 	std::cout << ' ' << _vec[i]; std::cout << std::endl;
-
 	for (unsigned int i = 0; i < _deq.size(); i+=2)
 	{
 		if (_deq[i] <= _deq[i + 1])
@@ -437,16 +443,6 @@ void	PmergeMe::_doPairsDeq(void)
 			_supd.push_back(_deq[i]);
 		}
 	}
-
-	// std::cout << "inf : ";
-	// for (unsigned int i = 0; i < _inf.size(); i++)
-	// 	std::cout << '	' << _inf[i];
-	// std::cout << std::endl;
-
-	// std::cout << "sup : ";
-	// for (unsigned int i = 0; i < _sup.size(); i++)
-	// 	std::cout << '	' << _sup[i];
-	// std::cout << std::endl;
 }
 
 void	PmergeMe::_orderPairsDeq(void)
@@ -473,32 +469,76 @@ void	PmergeMe::_orderPairsDeq(void)
 			j++;
 		}	
 		i++;
-		
-		/*if (_supd[i] > _supd[i + 1])
-		{
-			tmp = _supd[i + 1];
-			_supd[i + 1] = _supd[i];
-			_supd[i] = tmp;
-			tmp = _infd[i + 1];
-			_infd[i + 1] = _infd[i];
-			_infd[i] = tmp;
-			i = 0;
-		}
-		else
-			i++;*/
-	}// a changer
+	}
 
 	if (_oddNbd >= 0)
 		_infd.push_back(_oddNbd);
-	// std::cout << "inf : ";
-	// for (unsigned int i = 0; i < _inf.size(); i++)
-	// 	std::cout << '	' << _inf[i];
-	// std::cout << std::endl;
+}
 
-	// std::cout << "sup : ";
-	// for (unsigned int i = 0; i < _sup.size(); i++)
-	// 	std::cout << '	' << _sup[i];
-	// std::cout << std::endl;
+void	PmergeMe::_mergeSortDeq(std::deque<int> &_sup, std::deque<int> &_inf)
+{
+	// std::cout << "Splitting : ";
+	// for (size_t i = 0; i < _sup.size(); i++)
+	// 	std::cout << _sup[i] << ' ';
+	// std::cout << std::endl;		
+	if (_sup.size() > 1)
+	{
+		int mid = _sup.size() / 2;
+
+		std::deque<int> _supLeftHalf;
+		_supLeftHalf.assign(_sup.begin(), _sup.begin() + mid);
+
+		std::deque<int> _supRightHalf;
+		_supRightHalf.assign(_sup.begin() + mid, _sup.end());
+
+		std::deque<int> _infLeftHalf;
+		_infLeftHalf.assign(_inf.begin(), _inf.begin() + mid);
+
+		std::deque<int> _infRightHalf;
+		_infRightHalf.assign(_inf.begin() + mid, _inf.end());
+
+		_mergeSortDeq(_supLeftHalf, _infLeftHalf);
+		_mergeSortDeq(_supRightHalf, _infRightHalf);
+
+		size_t i = 0;
+		size_t j = 0;
+		size_t k = 0;
+		while (i < _supLeftHalf.size() && j < _supRightHalf.size())
+		{
+			if (_supLeftHalf[i] < _supRightHalf[j])
+			{
+				_sup[k] = _supLeftHalf[i];
+				_inf[k] = _infLeftHalf[i];
+				i++;
+			}
+			else{
+				// std::cout << "ici\n";
+				_sup[k] = _supRightHalf[j];
+				_inf[k] = _infRightHalf[j];			
+				j++;
+			}
+			k++;
+		}
+		while (i < _supLeftHalf.size())
+		{
+			_sup[k] = _supLeftHalf[i];
+			_inf[k] = _infLeftHalf[i];
+			i++;
+			k++;
+		}
+		while (j < _supRightHalf.size())
+		{
+			_sup[k] = _supRightHalf[j];
+			_inf[k] = _infRightHalf[j];
+			j++;
+			k++;
+		}
+	
+	}		
+	// std::cout << "Merging : ";
+	// for (size_t i = 0; i < _sup.size(); i++)
+	// 	std::cout << _sup[i] << ' ';
+	// std::cout << std::endl;		
 }
 
 void	PmergeMe::_doDichotomyDeq(void)
@@ -508,57 +548,38 @@ void	PmergeMe::_doDichotomyDeq(void)
 		if (_deqFinal[midd] < _infd[_indexd])//go moitie droite
 		{
 			lowd = midd;
-			// high = high;
 			midd = lowd + (highd - lowd) / 2;
 		}
 		else if (_deqFinal[midd] > _infd[_indexd])//go moitie gauche
 		{
-			// low = low;
 			highd = midd;
 			midd = lowd + (highd - lowd) / 2;
 		}
-		// std::cout << "low = " << low << std::endl;
-		// std::cout << "high = " << high << std::endl;
-		// std::cout << "mid = " << mid << std::endl;
 	}
-	// std::cout << "_inf : ";
-	// for (unsigned int i = 0; i < _inf.size(); i++)
-	// 	std::cout << '	' << _inf[i];	
-	// std::cout << "\nsize = " << _inf.size() << std::endl;
-
-	// std::cout << "_vecFinal : ";
-	// for (unsigned int i = 0; i < _vecFinal.size(); i++)
-	// 	std::cout << '	' << _vecFinal[i];	
-	// std::cout << "\nsize = " << _vecFinal.size() << std::endl;
-	
-	// std::cout << "insert=" << _inf[_index] << " _vecFinal[mid]=" << _vecFinal[mid] << "\n";
-	// std::cout << "vecFinal size = " << _vecFinal.size() << "\n";
 	if (midd == 0 && (_infd[_indexd] < _deqFinal[midd]))
 		_deqFinal.insert(_deqFinal.begin(), _infd[_indexd]);
 	else if (midd == (_deqFinal.size() - 2) && (_infd[_indexd] > _deqFinal[midd]) && (_infd[_indexd] > _deqFinal[midd + 1]))
 	{
-		// std::cout << "icii\n";
 		_deqFinal.insert(_deqFinal.begin() + midd + 2, _infd[_indexd]);
 	}
 	else
 	{
-		// std::cout << "ici\n";
 		_deqFinal.insert(_deqFinal.begin() + midd + 1, _infd[_indexd]);
 	}
 	lowd = 0;
-	highd = _deqFinal.size() - 1;//
+	highd = _deqFinal.size() - 1;
 	midd = lowd + (highd - lowd) / 2;
 }
 
-void	PmergeMe::isSortedDeq(std::deque<unsigned int> deq)
+void	PmergeMe::isSortedDeq(std::deque<int> deq)
 {
 	for (unsigned int i = 0; i < (deq.size() - 1); i++)
 	{
 		if (deq[i] > deq[i + 1])
 		{
-			std::cout << "Deq not sorted :////\n";
+			std::cout << RED "Deq not sorted :////\n" RESET;
 			return ;
 		}
 	}
-	std::cout << "Deq is sorted !\n";
+	std::cout << GREEN "Deq is sorted !\n" RESET;
 }

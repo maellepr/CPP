@@ -2,10 +2,9 @@
 
 int main(int ac, char **av)
 {
-	if (ac >= 2)
+	if (ac > 2)
 	{
 		PmergeMe MI;
-		
 		try
 		{
 			MI.MergeInsertion(ac, av);
@@ -17,6 +16,6 @@ int main(int ac, char **av)
 		
 	}
 	else
-		std::cout << "The program must take at least one argument" << std::endl;
+		std::cout << "The program must take at least two numbers" << std::endl;
 	return 0;
 }
