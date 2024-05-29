@@ -41,9 +41,9 @@ void	PmergeMe::MergeInsertion(int ac, char **av)
 		std::cout << av[i] << ' ';
 	std::cout << std::endl << "After: ";
 	_printVector(this->_vecFinal);
-	isSortedVec(_vecFinal);
-	isSortedDeq(_deqFinal);
-	isSameSize(ac);
+	// isSortedVec(_vecFinal);
+	// isSortedDeq(_deqFinal);
+	// isSameSize(ac);
 	std::cout << "Time to process a range of " << ac - 1 << " elements with std::vector<int> : " << static_cast<float>(tVec)/CLOCKS_PER_SEC << " seconds" << std::endl;	
 	std::cout << "Time to process a range of " << ac - 1 << " elements with std::deque<int> : " << static_cast<float>(tDeq)/CLOCKS_PER_SEC << " seconds" << std::endl;
 }
@@ -87,24 +87,9 @@ void	PmergeMe::_sortVector()
 	_doPairsVec();
 	//Range les pairs en ordre croissant suivant les sup
 	// _orderPairsVec();
-	// std::cout << "inf : ";
-	// for(size_t i = 0; i < _inf.size(); i++)
-	// 	std::cout << _inf[i] << ' ';
-	// std::cout << "\nsup : ";
-	// for(size_t i = 0; i < _sup.size(); i++)
-	// 	std::cout << _sup[i] << ' ';
-	// std::cout << '\n';
-
 	_mergeSortVec(_sup, _inf);
 	if (_oddNb >= 0)
 		_inf.push_back(_oddNb);
-	// std::cout << "inf : ";
-	// for(size_t i = 0; i < _inf.size(); i++)
-	// 	std::cout << _inf[i] << ' ';
-	// std::cout << "\nsup : ";
-	// for(size_t i = 0; i < _sup.size(); i++)
-	// 	std::cout << _sup[i] << ' ';
-	// std::cout << '\n';
 	//Remettre tous les superieurs tries dans _vec final
 	for (unsigned int i = 0; i < _sup.size(); i++)
 		_vecFinal.push_back(_sup[i]);
@@ -177,19 +162,6 @@ void	PmergeMe::_doPairsVec(void)
 		}
 	}
 }
-
-// void	PmergeMe::_mergeSortVec(std::vector<int> _sup, int low, int high)
-// {
-// 	int mid;
-// 	if (low < high)
-// 	{
-// 		mid = (low + high) / 2;
-// 		_mergeSortVec(_sup, low, mid);
-// 		_mergeSortVec(_sup, mid + 1, high);
-
-// 		merge(_sup, low, high, mid);
-// 	}
-// }
 
 void	PmergeMe::_mergeSortVec(std::vector<int> &_sup, std::vector<int> &_inf)
 {
@@ -280,8 +252,8 @@ void	PmergeMe::_orderPairsVec(void)
 		}	
 		i++;
 	}
-	// if (_oddNb >= 0)
-	// 	_inf.push_back(_oddNb);
+	if (_oddNb >= 0)
+		_inf.push_back(_oddNb);
 }
 
 void	PmergeMe::_doDichotomyVec(void)
@@ -477,10 +449,6 @@ void	PmergeMe::_orderPairsDeq(void)
 
 void	PmergeMe::_mergeSortDeq(std::deque<int> &_sup, std::deque<int> &_inf)
 {
-	// std::cout << "Splitting : ";
-	// for (size_t i = 0; i < _sup.size(); i++)
-	// 	std::cout << _sup[i] << ' ';
-	// std::cout << std::endl;		
 	if (_sup.size() > 1)
 	{
 		int mid = _sup.size() / 2;
@@ -534,11 +502,7 @@ void	PmergeMe::_mergeSortDeq(std::deque<int> &_sup, std::deque<int> &_inf)
 			k++;
 		}
 	
-	}		
-	// std::cout << "Merging : ";
-	// for (size_t i = 0; i < _sup.size(); i++)
-	// 	std::cout << _sup[i] << ' ';
-	// std::cout << std::endl;		
+	}
 }
 
 void	PmergeMe::_doDichotomyDeq(void)
